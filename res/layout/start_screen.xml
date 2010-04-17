@@ -33,16 +33,16 @@
 		android:layout_y="286sp"
 	/>
 	
-	<ImageView
-		android:id="@+id/show_credits"
-		android:layout_width="150sp"
-		android:layout_height="15sp"
-		android:src="@drawable/show_credits"
-		android:layout_x="150sp"
-		android:layout_y="400sp"
-	/>
+    <!-- <ImageView
+        android:id="@+id/show_credits"
+        android:layout_width="150sp"
+        android:layout_height="15sp"
+        android:src="@drawable/show_credits"
+        android:layout_x="150sp"
+        android:layout_y="400sp"
+    /> -->
 	
-    <!-- <TextView
+    <TextView
         android:id="@+id/show_credits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         android:layout_y="483sp"
         android:textSize="8sp"
         android:textColor="#ffa4b4f8"
-        android:text="Version 1.16.2"
-    /> -->
+        android:text="Version 3.3.1"
+    />
 </AbsoluteLayout>
 

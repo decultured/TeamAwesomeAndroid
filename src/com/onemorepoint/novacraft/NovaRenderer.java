@@ -34,7 +34,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
 		gameObject.Initialize();
         
         background = new NovaBackground();
-        background.Load(gl, 0);
+        background.Load(gl, 1);
     }
 
     public void onSurfaceChanged(GL10 gl, int w, int h)
@@ -73,10 +73,11 @@ public class NovaRenderer implements GLSurfaceView.Renderer
         gl.glLoadIdentity();
         
      	background.Render();
+     	background.AddOffset(6.0f);
  
 		gameObject.Update();
 		gameObject.Render();
        
-        tstr.Render(240.0f, 477.0f);
+        tstr.Render(240.0f, 100.0f);
     }
 }
