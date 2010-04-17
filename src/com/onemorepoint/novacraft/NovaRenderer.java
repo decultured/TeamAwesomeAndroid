@@ -11,9 +11,7 @@ import com.onemorepoint.novacraft.novagame.*;
 
 public class NovaRenderer implements GLSurfaceView.Renderer
 {
-	NovaSprite tstr;
 	private NovaGame gameObject;
-	private NovaBackground background;
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
@@ -28,9 +26,6 @@ public class NovaRenderer implements GLSurfaceView.Renderer
 
 		gameObject = new NovaGame();
 		gameObject.Initialize();
-        
-        background = new NovaBackground();
-        background.Load(gl, 0);
     }
 
     public void onSurfaceChanged(GL10 gl, int w, int h)
@@ -58,13 +53,8 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
-        
-     	background.Render();
-     	background.AddOffset(3.0f);
  
-		//gameObject.Update();
-		//gameObject.Render();
-       
-        tstr.Render(240.0f, 100.0f);
+		gameObject.Update();
+		gameObject.Render();
     }
 }

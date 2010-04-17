@@ -8,10 +8,12 @@ public class NovaGame extends Game
 {
 	private int Score;
 	private int Lives;
+	private NovaBackground background;
 	
 	public void NovaGame()
 	{
-
+		background = new NovaBackground();
+        background.Load(gl, 0);
 	}
 
     @Override
@@ -26,5 +28,7 @@ public class NovaGame extends Game
 	{
         super.Render();
 		
+		background.Render();
+     	background.AddOffset(elapsedTime * 0.6f);
 	}
 }
