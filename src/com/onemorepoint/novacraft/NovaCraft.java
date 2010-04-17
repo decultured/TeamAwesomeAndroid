@@ -43,6 +43,7 @@ public class NovaCraft extends Activity
     {
         // Ideally a game should implement onResume() and onPause()
         // to take appropriate action when the activity looses focus
+        
         super.onResume();
         mGLSurfaceView.onResume();
     }

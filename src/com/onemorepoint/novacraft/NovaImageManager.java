@@ -8,8 +8,8 @@ public class NovaImageManager
 {
 	public static NovaImageManager instance = null;
 	
-	LinkedList<NovaImage> images;
-	GL10 gl;
+	static LinkedList<NovaImage> images;
+	static GL10 gl;
 	
 	public NovaImageManager(GL10 _gl)
 	{	
@@ -18,6 +18,7 @@ public class NovaImageManager
 		
 		if(instance == null)
 			instance = this;
+		else instance.gl = _gl;
 	}
 	
 	public static NovaImageManager GetInstance()
@@ -26,6 +27,11 @@ public class NovaImageManager
 			instance = new NovaImageManager(null);
 			
 		return instance;
+	}
+	
+	public void ClearImageList()
+	{
+		images.clear();
 	}
 	
 	public NovaImage LoadImage(int resourceId)

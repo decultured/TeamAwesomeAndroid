@@ -177,4 +177,13 @@ public class NovaSprite
 		gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
 		gl.glPopMatrix();
 	}
+	
+	public float GetWidth()
+	{
+		return width;
+	}
+	public float GetHeight()
+	{
+		return height;
+	}
 }

@@ -24,6 +24,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
 
     public void onSurfaceChanged(GL10 gl, int w, int h)
     {
+    	NovaImageManager.GetInstance().ClearImageList();
         gl.glViewport(0,0,320,570);
 		gl.glMatrixMode(gl.GL_PROJECTION);
 		gl.glLoadIdentity();
