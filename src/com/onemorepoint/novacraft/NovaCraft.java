@@ -15,28 +15,14 @@ import android.view.WindowManager;
 
 public class NovaCraft extends Activity
 {
-<<<<<<< HEAD
-    private NovaGLSurface mGLSurfaceView;
-//  private GameObject gameObject;
-    
-    
-=======
 	public static final String TAG = "NovaCraft";
 	public static NovaCraft instance;
 	private NovaGLSurface mGLSurfaceView;
 	
-	
->>>>>>> a07bb80de48f80a324b793aa40bbf9036458c595
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-<<<<<<< HEAD
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        // Create our Preview view and set it as the content of our Activity
-=======
     	if(instance == null)
     		instance = this;
     		
@@ -50,7 +36,6 @@ public class NovaCraft extends Activity
         Log.v(TAG, "Welcome to NovaCraft");
 	    
 	    // Create our Preview view and set it as the content of our Activity
->>>>>>> a07bb80de48f80a324b793aa40bbf9036458c595
         mGLSurfaceView = new NovaGLSurface(this);
         setContentView(mGLSurfaceView);
     }
