@@ -9,14 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import com.onemorepoint.novacraft.game.*;
 
 public class NovaCraft extends Activity
 {
 	public static final String TAG = "NovaCraft";
 	public static NovaCraft instance;
 	private NovaGLSurface mGLSurfaceView;
-	private GameObject gameObject;
 	
 	
     /** Called when the activity is first created. */

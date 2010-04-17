@@ -7,22 +7,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
+import com.onemorepoint.novacraft.novagame.*;
 
 public class NovaRenderer implements GLSurfaceView.Renderer
 {
 	float colorR, colorG, colorB;
 	NovaImage tstr;
+	private NovaGame gameObject;
 	
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
         colorR = 1;
         colorG = 1;
         colorB = 1;
-        
+
         Log.v(NovaCraft.TAG, "Creating NovaImage test...");
         tstr = new NovaImage(gl);
  
         tstr.LoadImage(R.raw.player_ship);
+
+		gameObject.Initialize();
     }
 
     public void onSurfaceChanged(GL10 gl, int w, int h)
@@ -55,7 +59,10 @@ public class NovaRenderer implements GLSurfaceView.Renderer
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
         gl.glTranslatef(0, 0, -1);
-        
+ 
+		gameObject.Update();
+		gameObject.Render();
+       
         tstr.Render();
     }
 }
