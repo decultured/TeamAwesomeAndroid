@@ -12,23 +12,21 @@ import com.onemorepoint.novacraft.novagame.*;
 public class NovaRenderer implements GLSurfaceView.Renderer
 {
 	float colorR, colorG, colorB;
-	NovaImage tstr;
+	NovaSprite tstr;
 	private NovaGame gameObject;
 	private NovaBackground background;
-	
-	float x,y;
-	
+
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
+    	// DO THIS FIRST!!
+    	NovaImageManager im = new NovaImageManager(gl);
+    	
         colorR = 1;
         colorG = 1;
         colorB = 1;
-
-        Log.v(NovaCraft.TAG, "Creating NovaImage test...");
-        x=y=0;
-        
-        tstr = new NovaImage(gl);
-        tstr.LoadImage(R.raw.player_ship);
+                
+        tstr = new NovaSprite(gl);
+        tstr.UseImage(im.LoadImage(R.raw.player_ship));
 
 		gameObject = new NovaGame();
 		gameObject.Initialize();
@@ -39,8 +37,6 @@ public class NovaRenderer implements GLSurfaceView.Renderer
 
     public void onSurfaceChanged(GL10 gl, int w, int h)
     {
-        //gl.glViewport(0, 0, w, h);
-        
         gl.glViewport(0,0,320,570);
 		gl.glMatrixMode(gl.GL_PROJECTION);
 		gl.glLoadIdentity();
@@ -75,8 +71,8 @@ public class NovaRenderer implements GLSurfaceView.Renderer
      	background.Render();
      	background.AddOffset(6.0f);
  
-		gameObject.Update();
-		gameObject.Render();
+		//gameObject.Update();
+		//gameObject.Render();
        
         tstr.Render(240.0f, 100.0f);
     }
