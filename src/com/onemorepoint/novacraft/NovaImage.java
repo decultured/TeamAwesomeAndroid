@@ -8,29 +8,97 @@ import android.util.Log;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+import java.nio.IntBuffer;
 import java.nio.ByteOrder;
+import android.graphics.Color;
 
 class NovaImage
 {
-	private static float texCoordArray[] = {
+	private static final float texCoordArray[] = {
 		      0.0f, 1.0f,  // 0, Top Left
 		      0.0f, 0.0f,  // 1, Bottom Left
 		      1.0f, 0.0f,  // 2, Bottom Right
 		      1.0f, 1.0f,  // 3, Top Right
 	};
-	
-	private final short[] indices = { 0, 1, 2, 0, 2, 3 };
+	private static final short[] indices = { 0, 1, 2, 0, 2, 3 };
 		
 	private int texID;
 	private GL10 gl;
 	FloatBuffer vertBuffer;
 	FloatBuffer texCoordBuffer;
 	ShortBuffer indexBuffer;
+	float width;
+	float height;
+	
+	public NovaImage()
+	{
+		texID = 0;
+		gl = null;
+		width = height = 0;
+	}
 		
 	public NovaImage(GL10 _gl)
 	{
 		texID = 0;
 		gl = _gl;
+		width = height = 0;
+	}
+	
+	public void SetGL(GL10 _gl)
+	{
+		gl = _gl;
+	}
+	
+	private void _BuildVerts()
+	{
+		float [] vertices = new float[8];
+		
+		// Top left
+		vertices[0] = 0.0f;
+		vertices[1] = 0.0f;
+		
+		// Bottom left
+		vertices[2] = 0.0f;
+		vertices[3] = height;
+		
+		// Bottom right
+		vertices[4] = width;
+		vertices[5] = height;
+		
+		// Top right
+		vertices[6]  = width;
+		vertices[7] = 0.0f;
+		
+		// Setup vertex buffer
+		ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
+		vbb.order(ByteOrder.nativeOrder());
+		vertBuffer = vbb.asFloatBuffer();
+		vertBuffer.put(vertices);
+		vertBuffer.position(0);
+	}
+	
+	// Passing <= 0 for _w or _h will scale proportional
+	void SetSize(float _w, float _h)
+	{
+		float oldW = width;
+		float oldH = height;
+		
+		if(_w > 0)
+		{
+			width = _w;
+			if(_h > 0)
+				height = _h;
+			else 
+				height = (width/oldH)*height;
+		}
+		else if(_h > 0)
+		{
+			height = _h;
+			width = (width/oldW)*width;
+		}
+		else return;
+		
+		_BuildVerts();
 	}
 	
 	public Boolean LoadImage(int resourceId)
@@ -42,50 +110,41 @@ class NovaImage
 			return false;
 		}
 		
-		ByteBuffer pixels = ByteBuffer.allocate(partyOBits.getWidth()*partyOBits.getHeight()*4);
-		partyOBits.copyPixelsToBuffer(pixels);
+		ByteBuffer bb = ByteBuffer.allocateDirect(partyOBits.getHeight()*partyOBits.getWidth()*4);
+		bb.order(ByteOrder.nativeOrder());
+		IntBuffer ib = bb.asIntBuffer();
+		partyOBits.copyPixelsToBuffer(ib);
+		bb.position(0);
 		
+		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
 		
 		int [] texIDA = new int[1];
 		gl.glGenTextures(1, texIDA, 0);
 		texID = texIDA[0];
 		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
 		
-		gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGBA, partyOBits.getWidth(), partyOBits.getHeight(), 0, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, pixels);
+		gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGBA, partyOBits.getWidth(), partyOBits.getHeight(), 0, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, bb);
 		if(gl.glGetError() > 0)
 		{
 			Log.e(NovaCraft.TAG, "Failed to load texture:" + resourceId);
 			return false;
 		}
-		else Log.v(NovaCraft.TAG, "Texture loaded:" + resourceId);
+		else Log.v(NovaCraft.TAG, "Texture loaded:" + resourceId + " with GL ID:" + texID);
 		
-		float [] vertices = new float[12];
-		// Top left
-		vertices[0] = 0.0f;
-		vertices[1] = 0.0f;
-		vertices[2] = 0.0f;
+		width = partyOBits.getWidth();
+		height = partyOBits.getHeight();
 		
-		// Bottom left
-		vertices[3] = 0.0f;
-		vertices[4] = 100.0f;//(float)partyOBits.getHeight();
-		vertices[5] = 0.0f;
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
 		
-		// Bottom right
-		vertices[6] = 100.0f;//(float)partyOBits.getWidth();
-		vertices[7] = 100.0f;//(float)partyOBits.getHeight();
-		vertices[8] = 0.0f;
+		_BuildVerts();
 		
-		// Top right
-		vertices[9]  = 100.0f;//(float)partyOBits.getWidth();
-		vertices[10] = 0.0f;
-		vertices[11] = 0.0f;
-		
-		// Setup vertex buffer
-		ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
-		vbb.order(ByteOrder.nativeOrder());
-		vertBuffer = vbb.asFloatBuffer();
-		vertBuffer.put(vertices);
-		vertBuffer.position(0);
+		// Setup tex coord buffer
+		ByteBuffer tbb = ByteBuffer.allocateDirect(texCoordArray.length * 4);
+		tbb.order(ByteOrder.nativeOrder());
+		texCoordBuffer = tbb.asFloatBuffer();
+		texCoordBuffer.put(texCoordArray);
+		texCoordBuffer.position(0);
 		
 		// Setup index buffer
 		ByteBuffer ibb = ByteBuffer.allocateDirect(indices.length * 2);
@@ -97,16 +156,14 @@ class NovaImage
 		return true;
 	}
 	
-	public void Render()
+	public void Render(float _x, float _y)
 	{
-		gl.glBindTexture(gl.GL_TEXTURE_2D, 0);
-		gl.glDisable(gl.GL_TEXTURE_2D);
-		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertBuffer);
-		gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-		
-		if(gl.glGetError() != 0)
-			Log.v(NovaCraft.TAG, "GL ERROR!");
+		gl.glPushMatrix();
+		gl.glTranslatef(_x-(width*0.5f), _y-(height*0.5f), 0);
+		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
+		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
+		gl.glTexCoordPointer(2, gl.GL_FLOAT, 0, texCoordBuffer);
+		gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
+		gl.glPopMatrix();
 	}
 }

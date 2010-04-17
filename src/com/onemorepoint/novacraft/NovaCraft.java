@@ -24,12 +24,12 @@ public class NovaCraft extends Activity
     	if(instance == null)
     		instance = this;
     		
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
-        // BELOW PRESENTLY CAUSES A CRASH
-       // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    	// BELOW PRESENTLY CAUSES A CRASH
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    		
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
         
         Log.v(TAG, "Welcome to NovaCraft");
 	    
