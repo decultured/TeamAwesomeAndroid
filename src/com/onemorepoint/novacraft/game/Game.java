@@ -7,7 +7,7 @@ import java.lang.System;
 
 public class Game
 {
-	protected double elapsedTime;
+	protected float elapsedTime;
 	
 	private long lastTime;
 	private long thisTime;	
@@ -25,7 +25,7 @@ public class Game
 	{
 		lastTime = thisTime;
 		thisTime = System.nanoTime();
-		elapsedTime = (double)(thisTime - lastTime) * 0.000000001;
+		elapsedTime = (float)((thisTime - lastTime) * 0.000000001);
 	}
 		
 	public void Initialize()

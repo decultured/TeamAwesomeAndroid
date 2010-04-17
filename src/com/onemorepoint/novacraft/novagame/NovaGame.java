@@ -10,6 +10,7 @@ public class NovaGame extends Game
 	private int Score;
 	private int Lives;
 	private NovaBackground background;
+	private PlayerShip player;
 	
 	public NovaGame(GL10 _gl)
 	{
@@ -17,6 +18,8 @@ public class NovaGame extends Game
 		
 		background = new NovaBackground();
         background.Load(_gl, 0);
+        
+        player = new PlayerShip(_gl);
 	}
 
     @Override
@@ -30,7 +33,10 @@ public class NovaGame extends Game
 	{
         super.Render();
 		
+		// DO ME FIRST, PLAYER GETS SLOPPY SECONDS!
 		background.Render();
-     	background.AddOffset((float)elapsedTime * 180.0f);
+     	background.AddOffset(elapsedTime * 180.0f);
+     	
+     	player.Render(elapsedTime);
 	}
 }
