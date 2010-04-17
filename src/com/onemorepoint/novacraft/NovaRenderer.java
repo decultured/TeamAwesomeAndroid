@@ -34,7 +34,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     {
         //gl.glViewport(0, 0, w, h);
         
-        gl.glViewport(0,0,320,480);
+        gl.glViewport(0,0,320,570);
 		gl.glMatrixMode(gl.GL_PROJECTION);
 		gl.glLoadIdentity();
 		gl.glOrthof(0.0f,480.0f,0.0f, 854.0f,1.0f,-1.0f);
@@ -43,7 +43,6 @@ public class NovaRenderer implements GLSurfaceView.Renderer
 		gl.glFrontFace(gl.GL_CCW);
 		gl.glDisable(gl.GL_CULL_FACE);
 		gl.glDisable(gl.GL_DEPTH_TEST);
-		gl.glDisable(gl.GL_DITHER);
 		gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT, gl.GL_FASTEST);
 		gl.glEnable(gl.GL_BLEND);
 		gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA);
@@ -62,12 +61,12 @@ public class NovaRenderer implements GLSurfaceView.Renderer
 
     public void onDrawFrame(GL10 gl)
     {
-    	gl.glClearColor(colorR, colorG, colorB, 1.0f);
+	    gl.glClearColor(colorR, colorG, colorB, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
-        gl.glTranslatef(0, 0, -1);
+        //gl.glTranslatef(0, 0, 0);
         
-     
-        tstr.Render(240.0f, 477.0f);
+     	background.Render();
+        //tstr.Render(240.0f, 477.0f);
     }
 }
