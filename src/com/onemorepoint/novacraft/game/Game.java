@@ -1,5 +1,7 @@
 package com.onemorepoint.novacraft.game;
 
+import android.util.Log;
+import com.onemorepoint.novacraft.*;
 import javax.microedition.khronos.opengles.GL10;
 import java.lang.System;
 
@@ -34,6 +36,8 @@ public class Game
 	public void Update()
 	{
 		UpdateTime();
+
+		Log.v(NovaCraft.TAG, "Down: " + Input.isDown + "MouseX: " + Input.xPos + " MouseY: " + Input.yPos);
 	}
 	
 	public void Render()

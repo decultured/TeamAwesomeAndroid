@@ -1,5 +1,6 @@
 package com.onemorepoint.novacraft;
 
+import com.onemorepoint.novacraft.game.*;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLSurfaceView;
@@ -23,7 +24,12 @@ public class NovaGLSurface extends GLSurfaceView
         queueEvent(new Runnable(){
             public void run() {
             }});
-			Log.v(NovaCraft.TAG, "MouseX: " + event.getX() + " MouseY: " + event.getY());
-            return true;
+			
+		if (event.getAction() == MotionEvent.ACTION_UP)
+			Input.SetInput(false, event.getX(), event.getY());
+		else
+			Input.SetInput(true, event.getX(), event.getY());
+			
+        return true;
 	}
 }
