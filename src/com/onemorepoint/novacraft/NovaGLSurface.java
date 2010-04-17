@@ -22,8 +22,6 @@ class NovaGLSurface extends GLSurfaceView
     {
         queueEvent(new Runnable(){
             public void run() {
-                mRenderer.setColor(event.getX() / getWidth(),
-                        event.getY() / getHeight(), (event.getX()+event.getY())/(getWidth()+getHeight()));
             }});
 			Log.v(NovaCraft.TAG, "MouseX: " + event.getX() + " MouseY: " + event.getY());
             return true;
