@@ -9,22 +9,48 @@ import android.view.View;
 import android.widget.ImageView;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-//import game;
+import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class NovaCraft extends Activity
 {
+<<<<<<< HEAD
     private NovaGLSurface mGLSurfaceView;
 //  private GameObject gameObject;
     
     
+=======
+	public static final String TAG = "NovaCraft";
+	public static NovaCraft instance;
+	private NovaGLSurface mGLSurfaceView;
+	
+	
+>>>>>>> a07bb80de48f80a324b793aa40bbf9036458c595
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+<<<<<<< HEAD
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         // Create our Preview view and set it as the content of our Activity
+=======
+    	if(instance == null)
+    		instance = this;
+    		
+    	// BELOW PRESENTLY CAUSES A CRASH
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    		
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+        
+        Log.v(TAG, "Welcome to NovaCraft");
+	    
+	    // Create our Preview view and set it as the content of our Activity
+>>>>>>> a07bb80de48f80a324b793aa40bbf9036458c595
         mGLSurfaceView = new NovaGLSurface(this);
         setContentView(mGLSurfaceView);
     }

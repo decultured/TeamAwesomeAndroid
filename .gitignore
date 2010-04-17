@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 *.class
 local.properties
+=======
+local.properties
+bin*
+bin/*
+>>>>>>> a07bb80de48f80a324b793aa40bbf9036458c595

@@ -8,6 +8,8 @@ import android.content.Context;
 
 class NovaGLSurface extends GLSurfaceView
 {
+	NovaRenderer mRenderer;
+	
     public NovaGLSurface(Context context)
     {
         super(context);
@@ -20,10 +22,8 @@ class NovaGLSurface extends GLSurfaceView
         queueEvent(new Runnable(){
             public void run() {
                 mRenderer.setColor(event.getX() / getWidth(),
-                        event.getY() / getHeight(), 1.0f);
+                        event.getY() / getHeight(), (event.getX()+event.getY())/(getWidth()+getHeight()));
             }});
             return true;
 	}
-
-	NovaRenderer mRenderer;
 }
