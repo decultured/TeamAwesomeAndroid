@@ -1,0 +1,4 @@
+#!/bin/bash
+ant debug
+adb uninstall com.onemorepoint.novacraft
+adb install bin/NovaCraft-debug.apk
