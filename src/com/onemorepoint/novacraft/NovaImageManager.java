@@ -1,5 +1,6 @@
 package com.onemorepoint.novacraft;
 
+import android.util.Log;
 import javax.microedition.khronos.opengles.GL10;
 import java.util.*;
 
@@ -43,11 +44,16 @@ class NovaImageManager
 		}
 		
 		if(img != null)
+		{
+			Log.v(NovaCraft.TAG, "Reusing image resource " + resourceId);
 			return img;
+		}
 			
 		img = new NovaImage();
 		if(!img.LoadImage(resourceId, gl))
 			return null;
+			
+		images.addLast(img);
 		
 		return img;
 	}
