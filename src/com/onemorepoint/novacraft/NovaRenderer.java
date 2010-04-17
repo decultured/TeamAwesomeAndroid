@@ -32,7 +32,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
         gl.glViewport(0,0,480,854);
 		gl.glMatrixMode(gl.GL_PROJECTION);
 		gl.glLoadIdentity();
-		gl.glOrthof(0.0f,480.0f,-854.0f,0.0f,0.0f,1.0f);
+		gl.glOrthof(0.0f,480.0f,0.0f,854.0f,1.0f,-1.0f);
 		gl.glMatrixMode(gl.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		gl.glFrontFace(gl.GL_CCW);
@@ -54,7 +54,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     	gl.glClearColor(colorR, colorG, colorB, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
-        gl.glTranslatef(100, 100, 0);
+        gl.glTranslatef(0, 0, -1);
         
         tstr.Render();
     }

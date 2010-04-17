@@ -6,20 +6,17 @@ import javax.microedition.khronos.opengles.GL10;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-=======
-//import game;
->>>>>>> e475938f9ed33f3a5c4f3540b3632b2ae31c654d
+import com.onemorepoint.novacraft.game.*;
 
 public class NovaCraft extends Activity
 {
 	public static final String TAG = "NovaCraft";
 	public static NovaCraft instance;
 	private NovaGLSurface mGLSurfaceView;
-//	private GameObject gameObject;
+	private GameObject gameObject;
 	
 	
     /** Called when the activity is first created. */
