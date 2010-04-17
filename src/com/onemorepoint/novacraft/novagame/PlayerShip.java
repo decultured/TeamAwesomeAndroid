@@ -5,7 +5,7 @@ import com.onemorepoint.novacraft.game.*;
 public class PlayerShip extends GameObject
 {
 	
-	public void PlayerShip()
+	public PlayerShip()
 	{
 
 	}

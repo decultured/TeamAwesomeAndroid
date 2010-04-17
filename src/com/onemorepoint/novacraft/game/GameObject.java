@@ -17,7 +17,7 @@ public class GameObject
 	private boolean visible;
 	private boolean active;
 
-	public void GameObject()
+	public GameObject()
 	{
 		
 	}

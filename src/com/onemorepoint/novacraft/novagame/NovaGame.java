@@ -9,7 +9,7 @@ public class NovaGame extends Game
 	private int Score;
 	private int Lives;
 	
-	public void NovaGame()
+	public NovaGame()
 	{
 
 	}

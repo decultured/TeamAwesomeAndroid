@@ -9,7 +9,7 @@ public class Game
 	private long lastTime;
 	private long thisTime;	
 
-	public void Game()
+	public Game()
 	{
 		elapsedTime = 0;
 		thisTime = System.nanoTime();
