@@ -6,7 +6,7 @@ import android.util.Log;
 import android.graphics.Color;
 import java.lang.Math;
 
-class NovaBackground
+public class NovaBackground
 {
 	NovaSprite images[];
 	float offset = 0;

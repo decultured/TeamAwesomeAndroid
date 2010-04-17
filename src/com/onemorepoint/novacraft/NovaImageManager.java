@@ -4,7 +4,7 @@ import android.util.Log;
 import javax.microedition.khronos.opengles.GL10;
 import java.util.*;
 
-class NovaImageManager
+public class NovaImageManager
 {
 	public static NovaImageManager instance = null;
 	

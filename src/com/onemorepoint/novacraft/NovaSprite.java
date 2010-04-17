@@ -12,7 +12,7 @@ import java.nio.IntBuffer;
 import java.nio.ByteOrder;
 import android.graphics.Color;
 
-class NovaSprite
+public class NovaSprite
 {
 	private static final float texCoordArray[] = {
 		      0.0f, 1.0f,  // 0, Top Left

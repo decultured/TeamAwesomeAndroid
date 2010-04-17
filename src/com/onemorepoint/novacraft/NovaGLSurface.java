@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.content.Context;
 import android.util.Log;
 
-class NovaGLSurface extends GLSurfaceView
+public class NovaGLSurface extends GLSurfaceView
 {
 	NovaRenderer mRenderer;
 	

@@ -17,14 +17,8 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     {
     	// DO THIS FIRST!!
     	NovaImageManager im = new NovaImageManager(gl);
-    	
-       	tstr = new NovaSprite(gl);
-        tstr.UseImage(im.LoadImage(R.raw.player_ship));
-        im.LoadImage(R.raw.player_ship);
-        im.LoadImage(R.raw.player_ship);
-        im.LoadImage(R.raw.player_ship);
-
-		gameObject = new NovaGame();
+        
+		gameObject = new NovaGame(gl);
 		gameObject.Initialize();
     }
 
