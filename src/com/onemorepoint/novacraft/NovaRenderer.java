@@ -73,10 +73,11 @@ public class NovaRenderer implements GLSurfaceView.Renderer
         gl.glLoadIdentity();
         
      	background.Render();
+     	background.AddOffset(3.0f);
  
 		gameObject.Update();
 		gameObject.Render();
        
-        tstr.Render(240.0f, 477.0f);
+        tstr.Render(240.0f, 100.0f);
     }
 }
