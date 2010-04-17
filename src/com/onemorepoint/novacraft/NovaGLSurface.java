@@ -8,6 +8,8 @@ import android.content.Context;
 
 class NovaGLSurface extends GLSurfaceView
 {
+	NovaRenderer mRenderer;
+	
     public NovaGLSurface(Context context)
     {
         super(context);
@@ -24,6 +26,4 @@ class NovaGLSurface extends GLSurfaceView
             }});
             return true;
 	}
-
-	NovaRenderer mRenderer;
 }

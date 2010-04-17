@@ -6,13 +6,9 @@ import javax.microedition.khronos.opengles.GL10;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-=======
-//import game;
->>>>>>> e475938f9ed33f3a5c4f3540b3632b2ae31c654d
 
 public class NovaCraft extends Activity
 {
@@ -29,12 +25,12 @@ public class NovaCraft extends Activity
     	if(instance == null)
     		instance = this;
     		
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
-        // BELOW PRESENTLY CAUSES A CRASH
-       // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    	// BELOW PRESENTLY CAUSES A CRASH
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    		
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
         
         Log.v(TAG, "Welcome to NovaCraft");
 	    
