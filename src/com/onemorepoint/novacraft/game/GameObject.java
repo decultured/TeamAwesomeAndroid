@@ -1,5 +1,6 @@
 package com.onemorepoint.novacraft.game;
 
+import javax.microedition.khronos.opengles.GL10;
 import android.graphics.Point;
 
 public class GameObject
@@ -17,9 +18,11 @@ public class GameObject
 	private boolean visible;
 	private boolean active;
 
-	public void GameObject()
+	protected GL10 gl;
+
+	public GameObject(GL10 _gl)
 	{
-		
+		gl = _gl;
 	}
 	
 	public void Translate(Point pos)

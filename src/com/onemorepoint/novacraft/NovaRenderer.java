@@ -28,7 +28,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
         tstr = new NovaSprite(gl);
         tstr.UseImage(im.LoadImage(R.raw.player_ship));
 
-		gameObject = new NovaGame();
+		gameObject = new NovaGame(gl);
 		gameObject.Initialize();
         
         background = new NovaBackground();
@@ -71,8 +71,8 @@ public class NovaRenderer implements GLSurfaceView.Renderer
      	background.Render();
      	background.AddOffset(3.0f);
  
-		//gameObject.Update();
-		//gameObject.Render();
+		gameObject.Update();
+		gameObject.Render();
        
         tstr.Render(240.0f, 100.0f);
     }

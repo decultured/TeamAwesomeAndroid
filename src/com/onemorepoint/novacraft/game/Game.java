@@ -1,5 +1,6 @@
 package com.onemorepoint.novacraft.game;
 
+import javax.microedition.khronos.opengles.GL10;
 import java.lang.System;
 
 public class Game
@@ -9,8 +10,11 @@ public class Game
 	private long lastTime;
 	private long thisTime;	
 
-	public void Game()
+	protected GL10 gl;
+
+	public Game(GL10 _gl)
 	{
+		gl = _gl;
 		elapsedTime = 0;
 		thisTime = System.nanoTime();
 	}
