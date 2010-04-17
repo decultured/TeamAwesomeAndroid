@@ -1,3 +1,5 @@
 local.properties
 bin*
 bin/*
+*.class
+.DS_Store

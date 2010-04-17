@@ -15,7 +15,6 @@ public class NovaCraft extends Activity
 	public static final String TAG = "NovaCraft";
 	public static NovaCraft instance;
 	private NovaGLSurface mGLSurfaceView;
-//	private GameObject gameObject;
 	
 	
     /** Called when the activity is first created. */

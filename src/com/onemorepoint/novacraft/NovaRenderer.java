@@ -7,11 +7,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
+import com.onemorepoint.novacraft.novagame.*;
 
 public class NovaRenderer implements GLSurfaceView.Renderer
 {
 	float colorR, colorG, colorB;
 	NovaImage tstr;
+	private NovaGame gameObject;
 	private NovaBackground background;
 	
 	float x,y;
@@ -21,10 +23,15 @@ public class NovaRenderer implements GLSurfaceView.Renderer
         colorR = 1;
         colorG = 1;
         colorB = 1;
+
+        Log.v(NovaCraft.TAG, "Creating NovaImage test...");
         x=y=0;
         
         tstr = new NovaImage(gl);
         tstr.LoadImage(R.raw.player_ship);
+
+		gameObject = new NovaGame();
+		gameObject.Initialize();
         
         background = new NovaBackground();
         background.Load(gl, 0);
@@ -37,7 +44,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
         gl.glViewport(0,0,320,570);
 		gl.glMatrixMode(gl.GL_PROJECTION);
 		gl.glLoadIdentity();
-		gl.glOrthof(0.0f,480.0f,0.0f, 854.0f,1.0f,-1.0f);
+		gl.glOrthof(0.0f,480.0f,0.0f,854.0f,1.0f,-1.0f);
 		gl.glMatrixMode(gl.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		gl.glFrontFace(gl.GL_CCW);
@@ -64,9 +71,12 @@ public class NovaRenderer implements GLSurfaceView.Renderer
 	    gl.glClearColor(colorR, colorG, colorB, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
-        //gl.glTranslatef(0, 0, 0);
         
      	background.Render();
-        //tstr.Render(240.0f, 477.0f);
+ 
+		gameObject.Update();
+		gameObject.Render();
+       
+        tstr.Render(240.0f, 477.0f);
     }
 }
