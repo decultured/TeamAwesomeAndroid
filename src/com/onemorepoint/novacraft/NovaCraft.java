@@ -4,29 +4,32 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.app.Activity;
+import android.view.Window;
+import android.view.View;
+import android.widget.ImageView;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 //import game;
 
 public class NovaCraft extends Activity
 {
-	private NovaGLSurface mGLSurfaceView;
-//	private GameObject gameObject;
-	
-	
+    private NovaGLSurface mGLSurfaceView;
+//  private GameObject gameObject;
+    
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-	    
-	    // Create our Preview view and set it as the content of our Activity
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
+        // Create our Preview view and set it as the content of our Activity
         mGLSurfaceView = new NovaGLSurface(this);
         setContentView(mGLSurfaceView);
     }
     
-	@Override
+    @Override
     protected void onResume()
     {
         // Ideally a game should implement onResume() and onPause()
