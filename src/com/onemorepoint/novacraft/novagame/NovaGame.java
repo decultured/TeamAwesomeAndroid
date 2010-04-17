@@ -26,6 +26,7 @@ public class NovaGame extends Game
 	public void Update()
 	{
         super.Update();
+		player.Update(elapsedTime);
 	}
 	
     @Override

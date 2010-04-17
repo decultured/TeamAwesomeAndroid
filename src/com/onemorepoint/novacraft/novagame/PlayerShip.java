@@ -20,7 +20,8 @@ public class PlayerShip extends GameObject
 	public void Update(float elapsedTime)
 	{
         super.Update(elapsedTime);
-		
+		if (Input.isDown)
+			positionX = Input.xPos;
 	}
 	
     @Override

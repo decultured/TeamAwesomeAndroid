@@ -37,7 +37,6 @@ public class Game
 	{
 		UpdateTime();
 
-		Log.v(NovaCraft.TAG, "Down: " + Input.isDown + "MouseX: " + Input.xPos + " MouseY: " + Input.yPos);
 	}
 	
 	public void Render()
