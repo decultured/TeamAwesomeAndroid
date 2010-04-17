@@ -20,7 +20,7 @@ class NovaGLSurface extends GLSurfaceView
         queueEvent(new Runnable(){
             public void run() {
                 mRenderer.setColor(event.getX() / getWidth(),
-                        event.getY() / getHeight(), 1.0f);
+                        event.getY() / getHeight(), (event.getX()+event.getY())/(getWidth()+getHeight()));
             }});
             return true;
 	}
