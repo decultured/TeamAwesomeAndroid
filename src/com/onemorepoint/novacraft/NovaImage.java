@@ -110,12 +110,17 @@ class NovaImage
 			return false;
 		}
 		
-		ByteBuffer bb = ByteBuffer.allocateDirect(partyOBits.getHeight()*partyOBits.getWidth()*4);
+		if(partyOBits.hasAlpha())
+			Log.v(NovaCraft.TAG, "HAS ALPHA");
+		else Log.v(NovaCraft.TAG, "NO ALPHA");
+		
+		int bpp = partyOBits.hasAlpha() ? 4 : 3;
+		ByteBuffer bb = ByteBuffer.allocateDirect(partyOBits.getHeight()*partyOBits.getWidth()*bpp);
 		bb.order(ByteOrder.nativeOrder());
-		IntBuffer ib = bb.asIntBuffer();
-		partyOBits.copyPixelsToBuffer(ib);
+		partyOBits.copyPixelsToBuffer(bb);
 		bb.position(0);
 		
+		gl.glPixelStorei(gl.GL_UNPACK_ALIGNMENT, 1);
 		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
 		
 		int [] texIDA = new int[1];
@@ -123,7 +128,7 @@ class NovaImage
 		texID = texIDA[0];
 		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
 		
-		gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGBA, partyOBits.getWidth(), partyOBits.getHeight(), 0, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, bb);
+		gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, partyOBits.hasAlpha() ? gl.GL_RGBA : gl.GL_RGB, partyOBits.getWidth(), partyOBits.getHeight(), 0, partyOBits.hasAlpha() ? gl.GL_RGBA : gl.GL_RGB, partyOBits.hasAlpha() ? gl.GL_UNSIGNED_BYTE : gl.GL_UNSIGNED_SHORT_5_6_5, bb);
 		if(gl.glGetError() > 0)
 		{
 			Log.e(NovaCraft.TAG, "Failed to load texture:" + resourceId);
@@ -160,6 +165,16 @@ class NovaImage
 	{
 		gl.glPushMatrix();
 		gl.glTranslatef(_x-(width*0.5f), _y-(height*0.5f), 0);
+		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
+		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
+		gl.glTexCoordPointer(2, gl.GL_FLOAT, 0, texCoordBuffer);
+		gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
+		gl.glPopMatrix();
+	}
+	public void RenderZ(float _x, float _y)
+	{
+		gl.glPushMatrix();
+		gl.glTranslatef(_x, _y, 0);
 		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
 		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
 		gl.glTexCoordPointer(2, gl.GL_FLOAT, 0, texCoordBuffer);
