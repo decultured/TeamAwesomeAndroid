@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fadingEdgeLength="0sp"
+    >
+	<ImageView
+	android:id="@+id/background"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/novacraft_menu_bg"
+	android:layout_x="0dp"
+	android:layout_y="0dp"
+	>
+	</ImageView>
+	
+	<ImageView
+		android:id="@+id/logo"
+		android:layout_width="fill_parent"
+		android:layout_height="43sp"
+		android:src="@drawable/novacraft_start_logo"
+		android:layout_x="2sp"
+		android:layout_y="226sp"
+	/>
+	
+	<ImageView
+		android:id="@+id/single_player_start"
+		android:layout_width="200sp"
+		android:layout_height="20sp"
+		android:src="@drawable/single_player_start"
+		android:layout_x="100sp"
+		android:layout_y="286sp"
+	/>
+	
+	<ImageView
+		android:id="@+id/show_credits"
+		android:layout_width="150sp"
+		android:layout_height="15sp"
+		android:src="@drawable/show_credits"
+		android:layout_x="150sp"
+		android:layout_y="400sp"
+	/>
+	
+	<TextView
+		android:id="@+id/show_credits"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:src="@drawable/show_credits"
+		android:layout_x="186sp"
+		android:layout_y="483sp"
+		android:textSize="8sp"
+		android:textColor="#ffa4b4f8"
+		android:text="Version 1.16.2"
+	/>
+</AbsoluteLayout>
+
