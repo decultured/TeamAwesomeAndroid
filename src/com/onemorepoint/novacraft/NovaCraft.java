@@ -6,11 +6,13 @@ import javax.microedition.khronos.opengles.GL10;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-
+//import game;
 
 public class NovaCraft extends Activity
 {
 	private NovaGLSurface mGLSurfaceView;
+//	private GameObject gameObject;
+	
 	
     /** Called when the activity is first created. */
     @Override
