@@ -49,7 +49,7 @@ public class PlayerShip extends GameObject
 	{
 		if (increase && projectilesPerSecond <= maxProjectilesPerSecond - projectilePower) {
 			projectilesPerSecond += projectilePower;
-		} else if (!increase && projectilesPerSecond >= 1.0f + projectilePower) {
+		} else if (!increase && projectilesPerSecond >= 2.0f + projectilePower) {
 			projectilesPerSecond -= projectilePower;
 		}
 	}
