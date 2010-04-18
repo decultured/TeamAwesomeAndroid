@@ -4,6 +4,7 @@ import com.onemorepoint.novacraft.*;
 import javax.microedition.khronos.opengles.GL10;
 import com.onemorepoint.novacraft.game.*;
 import com.onemorepoint.novacraft.novagame.*;
+import android.util.Log;
 
 public class PlayerShip extends GameObject
 {	
@@ -16,9 +17,13 @@ public class PlayerShip extends GameObject
 	NovaSprite spriteR;
 	NovaSprite currentSprite;
 	
+	float health;
+	
 	public PlayerShip(GL10 _gl, ProjectileManager _projManager)
 	{
 		super(_gl);
+		
+		health = 100.0f;
 
 		projManager = _projManager;
 		projectilesPerSecond = 3.0f;
@@ -87,5 +92,18 @@ public class PlayerShip extends GameObject
         //super.Render(elapsedTime);
 		
 		currentSprite.Render(positionX, positionY);
+	}
+	
+	public boolean Hurt(float damage)
+	{
+		if(damage < 0)
+			return false;
+			
+		health -= damage;
+		Log.v(NovaCraft.TAG, "HEALTH: " + health);
+		
+		if(health <= 0)
+			return true;
+		return false;
 	}
 }

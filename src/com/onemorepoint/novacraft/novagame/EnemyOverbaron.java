@@ -7,9 +7,14 @@ import java.lang.Math;
 
 public class EnemyOverbaron extends EnemyShip
 {	
-	public EnemyOverbaron(GL10 _gl, PlayerShip p)
+	private float projectilesToFire;
+	private float projectilesPerSecond;
+	
+	public EnemyOverbaron(GL10 _gl, PlayerShip p, ProjectileManager _projManager)
 	{
-		super(_gl, p);
+		super(_gl, p, _projManager);
+		
+		projectilesPerSecond = 0.5f;
 		
 		health = 500;
 		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.overbaron_1));
@@ -36,6 +41,14 @@ public class EnemyOverbaron extends EnemyShip
         	velocityX = (float)(Math.random()*20 + 20);
         else if(positionX > 410)
         	velocityX = (float)(Math.random()*-20 - 20);
+        	
+        projectilesToFire += elapsedTime * projectilesPerSecond;
+		while (projectilesToFire > 1.0f) {
+			projManager.AddProjectile(positionX, positionY, 0.283662185f, -0.958924275f, 150.0f, 7.0f, false);
+			projManager.AddProjectile(positionX, positionY, 0.0f, -1.0f, 150.0f, 7.0f, false);
+			projManager.AddProjectile(positionX, positionY, -0.283662185f, -0.958924275f, 150.0f, 7.0f, false);
+			projectilesToFire -= 1.0f;	
+		}
         
    	}
 	

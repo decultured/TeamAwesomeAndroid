@@ -8,24 +8,40 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 import com.onemorepoint.novacraft.novagame.*;
+import android.util.Log;
 
 public class NovaRenderer implements GLSurfaceView.Renderer
 {
 	private NovaGame gameObject;
+	
+	public static GL10 gl;
 
-    public void onSurfaceCreated(GL10 gl, EGLConfig config)
+    public void onSurfaceCreated(GL10 _gl, EGLConfig config)
     {
+    	gl = _gl;
     	// DO THIS FIRST!!
     	NovaImageManager im = new NovaImageManager(gl);
         
-		gameObject = new NovaGame(gl);
-		gameObject.Initialize();
+       	if(gameObject == null)
+       	{
+			gameObject = new NovaGame(gl);
+			gameObject.Initialize();
+		}
     }
 
-    public void onSurfaceChanged(GL10 gl, int w, int h)
+    public void onSurfaceChanged(GL10 _gl, int w, int h)
     {
+    	gl = _gl;
+    	
+    	if(w > h)
+    	{
+    		int temp = w;
+    		w = h;
+    		h = temp;
+    	}
+    	
     	NovaImageManager.GetInstance().ClearImageList();
-        gl.glViewport(0,0,320,570);
+        gl.glViewport(0,0,w,h);
 		gl.glMatrixMode(gl.GL_PROJECTION);
 		gl.glLoadIdentity();
 		gl.glOrthof(0.0f,480.0f,0.0f,854.0f,1.0f,-1.0f);
@@ -44,12 +60,19 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     }
     
 
-    public void onDrawFrame(GL10 gl)
+    public void onDrawFrame(GL10 _gl)
     {
+    	gl = _gl;
+    	
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
  
 		gameObject.Update();
 		gameObject.Render();
+    }
+    
+    public void onResume()
+    {
+    	NovaImageManager.GetInstance().ReloadTextures();
     }
 }
