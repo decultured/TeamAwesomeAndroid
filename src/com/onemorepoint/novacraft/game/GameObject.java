@@ -72,6 +72,16 @@ public class GameObject
 	    return true;
 	}
 	
+	public boolean CollidesWithObject(GameObject _gameObject)
+	{
+		if (positionY+sprite.GetHeight() < _gameObject.positionY) return(false);
+        if (positionY > _gameObject.positionY+_gameObject.sprite.GetHeight()) return(false);
+        if (positionX+sprite.GetWidth() < _gameObject.positionX) return(false);
+        if (positionX > _gameObject.positionX+_gameObject.sprite.GetWidth()) return(false);
+
+        return(true);
+	}
+	
 	public boolean PointCollidesWithObject(GameObject _gameObject)
 	{
 		float halfW = sprite.width * 0.5f;

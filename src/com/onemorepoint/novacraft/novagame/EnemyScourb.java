@@ -14,7 +14,7 @@ public class EnemyScourb extends EnemyShip
 	{
 		super(p, _projManager);
 
-		health = 500;
+		health = 50;
 		lastFrame = 0;
 
 		spriteF1 = new NovaSprite();
@@ -30,8 +30,8 @@ public class EnemyScourb extends EnemyShip
 		
 		positionY = 854 + sprite.GetHeight()/2;
 		positionX = (float)Math.random()*480.0f;
-		velocityY = -125;
-		velocityX = (float)(Math.random()*40 - 20);
+		velocityY = -200.0f - (float)Math.random()*40.0f;
+		velocityX = (float)(Math.random()*300 - 150);
 	}
 
     @Override

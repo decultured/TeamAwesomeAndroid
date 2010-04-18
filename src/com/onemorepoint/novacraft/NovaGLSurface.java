@@ -39,4 +39,16 @@ public class NovaGLSurface extends GLSurfaceView
     	super.onResume();
     	mRenderer.onResume();
     }
+    
+    @Override
+    public void onPause()
+    {
+    	super.onPause();
+    	mRenderer.onPause();
+    }
+    
+    public void onDestroy()
+    {
+    	mRenderer.onDestroy();
+    }
 }
