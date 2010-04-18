@@ -43,8 +43,16 @@ public class NovaImage
 		partyOBits.copyPixelsToBuffer(bb);
 		bb.position(0);
 		
+		
 		gl.glPixelStorei(gl.GL_UNPACK_ALIGNMENT, 1);
-		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
+		
+		if(texID != 0)
+		{
+			int [] texIDA = new int[1];
+			texIDA[0] = texID;
+			gl.glDeleteTextures(1, texIDA, 0);
+			texID = 0;
+		}
 		
 		int [] texIDA = new int[1];
 		gl.glGenTextures(1, texIDA, 0);

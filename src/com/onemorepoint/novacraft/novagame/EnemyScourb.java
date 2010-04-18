@@ -10,9 +10,9 @@ public class EnemyScourb extends EnemyShip
 	NovaSprite spriteF1, spriteF2, spriteF3;
 	float lastFrame;
 	
-	public EnemyScourb(GL10 _gl, PlayerShip p)
+	public EnemyScourb(GL10 _gl, PlayerShip p, ProjectileManager _projManager)
 	{
-		super(_gl, p);
+		super(_gl, p, _projManager);
 
 		health = 500;
 		lastFrame = 0;

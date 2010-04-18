@@ -47,26 +47,34 @@ public class NovaGame extends Game
      		if(scourbsOut < 5)
      		{
 	     		// Spawn enemies
-	     		EnemyScourb scourb = new EnemyScourb(gl, player);
+	     		EnemyScourb scourb = new EnemyScourb(gl, player, projManager);
 	     		enemies.addLast(scourb);
 	     		scourbsOut++;
 	     	}
      		
      		if(overbaronsOut < 1)
      		{
-     			EnemyOverbaron baron = new EnemyOverbaron(gl, player);
+     			EnemyOverbaron baron = new EnemyOverbaron(gl, player, projManager);
 	     		enemies.addLast(baron);
 	     		overbaronsOut++;
 	     	}
 	     	
 	     	if(mutalusksOut < 3)
 	     	{
-	     		EnemyMutalusk muta = new EnemyMutalusk(gl, player);
+	     		EnemyMutalusk muta = new EnemyMutalusk(gl, player, projManager);
 	     		enemies.addLast(muta);
 	     		mutalusksOut++;
 	     	}
      		
      		lastSpawn = totalTime;
+     	}
+     	
+     	if (projManager.CollidesWith(player, true, true))
+     	{
+     		if(player.Hurt(20.0f))
+     		{
+     			Log.v(NovaCraft.TAG, "YOU BE DED!");
+     		}
      	}
      	
      	Iterator enemyIter = enemies.iterator();
@@ -83,6 +91,8 @@ public class NovaGame extends Game
 					overbaronsOut--;
 				else if(enemy instanceof EnemyScourb)
 					scourbsOut--;
+				else if(enemy instanceof EnemyMutalusk)
+					mutalusksOut--;
 					
 				enemyIter.remove();
 			}
