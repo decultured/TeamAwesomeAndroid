@@ -12,7 +12,7 @@ import java.nio.IntBuffer;
 import java.nio.ByteOrder;
 import android.graphics.Color;
 
-class NovaSprite
+public class NovaSprite
 {
 	private static final float texCoordArray[] = {
 		      0.0f, 1.0f,  // 0, Top Left
@@ -176,5 +176,14 @@ class NovaSprite
 		gl.glTexCoordPointer(2, gl.GL_FLOAT, 0, texCoordBuffer);
 		gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
 		gl.glPopMatrix();
+	}
+	
+	public float GetWidth()
+	{
+		return width;
+	}
+	public float GetHeight()
+	{
+		return height;
 	}
 }

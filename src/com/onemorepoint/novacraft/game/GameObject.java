@@ -1,62 +1,53 @@
 package com.onemorepoint.novacraft.game;
 
+import com.onemorepoint.novacraft.*;
+import javax.microedition.khronos.opengles.GL10;
 import android.graphics.Point;
 
 public class GameObject
 {
-	private Point position;
-	private Point previousPosition;
-	private Point velocity;
-	private Point acceleration;
-	
-	private Point forward;
-	
-	private float width;
-	private float height;
+	protected float positionX;
+    protected float positionY;
+    protected float previousPositionX;
+    protected float previousPositionY;
+    protected float velocityX;
+    protected float velocityY;
+    protected float accelerationX;
+    protected float accelerationY;
+    
+    protected float forwardX;
+    protected float forwardY;
 	
 	private boolean visible;
 	private boolean active;
 
-	public GameObject()
-	{
-		
-	}
+	protected GL10 gl;
 	
-	public void Translate(Point pos)
+	protected NovaSprite sprite;
+
+	public GameObject(GL10 _gl)
 	{
-		position.x += pos.x;
-		position.y += pos.y;
+		gl = _gl;
+		sprite = new NovaSprite(_gl);
 	}
 	
 	public void Translate(float x, float y)
-	{
-		position.x += x;
-		position.y += y;
-	}
-	
-	public void AddVelocity(Point vel)
-	{
-		velocity.x += vel.x;
-		velocity.y += vel.y;
-	}
-	
-	public void AddVelocity(float x, float y)
-	{
-		velocity.x += x;
-		velocity.y += y;
-	}
-	
-	public void AddAcceleration(Point acc)
-	{
-		acceleration.x += acc.x;
-		acceleration.y += acc.y;
-	}
-
-	public void AddAcceleration(float x, float y)
-	{
-		acceleration.x += x;
-		acceleration.y += y;
-	}
+    {
+        positionX += x;
+        positionY += y;
+    }
+    
+    public void AddVelocity(float x, float y)
+    {
+        velocityX += x;
+        velocityY += y;
+    }
+    
+    public void AddAcceleration(float x, float y)
+    {
+        accelerationX += x;
+        accelerationY += y;
+    }
 	
 	public void Update(float elapsedTime)
 	{
@@ -65,6 +56,6 @@ public class GameObject
 	
 	public void Render(float elapsedTime)
 	{
-		
+		sprite.Render(positionX,positionY);	
 	}
 }

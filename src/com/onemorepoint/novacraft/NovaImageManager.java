@@ -1,14 +1,15 @@
 package com.onemorepoint.novacraft;
 
+import android.util.Log;
 import javax.microedition.khronos.opengles.GL10;
 import java.util.*;
 
-class NovaImageManager
+public class NovaImageManager
 {
 	public static NovaImageManager instance = null;
 	
-	LinkedList<NovaImage> images;
-	GL10 gl;
+	static LinkedList<NovaImage> images;
+	static GL10 gl;
 	
 	public NovaImageManager(GL10 _gl)
 	{	
@@ -17,6 +18,7 @@ class NovaImageManager
 		
 		if(instance == null)
 			instance = this;
+		else instance.gl = _gl;
 	}
 	
 	public static NovaImageManager GetInstance()
@@ -25,6 +27,11 @@ class NovaImageManager
 			instance = new NovaImageManager(null);
 			
 		return instance;
+	}
+	
+	public void ClearImageList()
+	{
+		images.clear();
 	}
 	
 	public NovaImage LoadImage(int resourceId)
@@ -43,11 +50,16 @@ class NovaImageManager
 		}
 		
 		if(img != null)
+		{
+			Log.v(NovaCraft.TAG, "Reusing image resource " + resourceId);
 			return img;
+		}
 			
 		img = new NovaImage();
 		if(!img.LoadImage(resourceId, gl))
 			return null;
+			
+		images.addLast(img);
 		
 		return img;
 	}

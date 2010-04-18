@@ -1,16 +1,22 @@
 package com.onemorepoint.novacraft.game;
 
+import android.util.Log;
+import com.onemorepoint.novacraft.*;
+import javax.microedition.khronos.opengles.GL10;
 import java.lang.System;
 
 public class Game
 {
-	protected double elapsedTime;
+	protected float elapsedTime;
 	
 	private long lastTime;
 	private long thisTime;	
 
-	public Game()
+	protected GL10 gl;
+
+	public Game(GL10 _gl)
 	{
+		gl = _gl;
 		elapsedTime = 0;
 		thisTime = System.nanoTime();
 	}
@@ -19,7 +25,7 @@ public class Game
 	{
 		lastTime = thisTime;
 		thisTime = System.nanoTime();
-		elapsedTime = (double)(thisTime - lastTime) * 0.000000001;
+		elapsedTime = (float)((thisTime - lastTime) * 0.000000001);
 	}
 		
 	public void Initialize()
@@ -30,6 +36,7 @@ public class Game
 	public void Update()
 	{
 		UpdateTime();
+
 	}
 	
 	public void Render()

@@ -12,7 +12,7 @@ import java.nio.IntBuffer;
 import java.nio.ByteOrder;
 import android.graphics.Color;
 
-class NovaImage
+public class NovaImage
 {
 	private int resourceID;
 	private int texID;
