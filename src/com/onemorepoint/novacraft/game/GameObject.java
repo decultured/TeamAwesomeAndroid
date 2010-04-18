@@ -6,29 +6,33 @@ import android.graphics.Point;
 
 public class GameObject
 {
-	protected float positionX;
-    protected float positionY;
-    protected float previousPositionX;
-    protected float previousPositionY;
-    protected float velocityX;
-    protected float velocityY;
-    protected float accelerationX;
-    protected float accelerationY;
+	public float positionX;
+    public float positionY;
+    public float previousPositionX;
+    public float previousPositionY;
+    public float velocityX;
+    public float velocityY;
+    public float accelerationX;
+    public float accelerationY;
     
-    protected float forwardX;
-    protected float forwardY;
+    public float forwardX;
+    public float forwardY;
 	
-	private boolean visible;
-	private boolean active;
+	public boolean visible;
+	public boolean active;
+	
+	public float timeAlive;
 
-	protected GL10 gl;
+	public GL10 gl;
 	
-	protected NovaSprite sprite;
+	public NovaSprite sprite;
 
 	public GameObject(GL10 _gl)
 	{
 		gl = _gl;
 		sprite = new NovaSprite(_gl);
+		visible = true;
+        active = true;
 	}
 	
 	public void Translate(float x, float y)
@@ -51,11 +55,20 @@ public class GameObject
 	
 	public void Update(float elapsedTime)
 	{
-		
+		timeAlive += elapsedTime;
+
+        previousPositionX = positionX;
+        previousPositionY = positionY;
+
+        AddVelocity(accelerationX * elapsedTime, accelerationY * elapsedTime);
+        Translate(velocityX * elapsedTime, velocityY * elapsedTime);
 	}
 	
 	public void Render(float elapsedTime)
 	{
+		if(!visible)
+			return;
+			
 		sprite.Render(positionX,positionY);	
 	}
 }

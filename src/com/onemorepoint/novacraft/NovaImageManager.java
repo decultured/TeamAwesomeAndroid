@@ -2,7 +2,8 @@ package com.onemorepoint.novacraft;
 
 import android.util.Log;
 import javax.microedition.khronos.opengles.GL10;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Iterator;
 
 public class NovaImageManager
 {
@@ -37,8 +38,7 @@ public class NovaImageManager
 	public NovaImage LoadImage(int resourceId)
 	{
 		NovaImage img = null;
-		Iterator iterator;
-		iterator = images.iterator();
+		Iterator iterator = images.iterator();
 		while(iterator.hasNext())
 		{	
 			NovaImage thisImg = (NovaImage)iterator.next();
