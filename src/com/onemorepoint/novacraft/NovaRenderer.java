@@ -20,11 +20,11 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     {
     	gl = _gl;
     	// DO THIS FIRST!!
-    	NovaImageManager im = new NovaImageManager(gl);
+    	NovaImageManager im = new NovaImageManager();
         
        	if(gameObject == null)
        	{
-			gameObject = new NovaGame(gl);
+			gameObject = new NovaGame();
 			gameObject.Initialize();
 		}
     }

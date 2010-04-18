@@ -10,20 +10,20 @@ public class EnemyScourb extends EnemyShip
 	NovaSprite spriteF1, spriteF2, spriteF3;
 	float lastFrame;
 	
-	public EnemyScourb(GL10 _gl, PlayerShip p, ProjectileManager _projManager)
+	public EnemyScourb(PlayerShip p, ProjectileManager _projManager)
 	{
-		super(_gl, p, _projManager);
+		super(p, _projManager);
 
 		health = 500;
 		lastFrame = 0;
 
-		spriteF1 = new NovaSprite(gl);
+		spriteF1 = new NovaSprite();
 		spriteF1.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.scorb_1));
 		
-		spriteF2 = new NovaSprite(gl);
+		spriteF2 = new NovaSprite();
 		spriteF2.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.scorb_2));
 		
-		spriteF3 = new NovaSprite(gl);
+		spriteF3 = new NovaSprite();
 		spriteF3.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.scorb_3));
 		
 		sprite = spriteF1;

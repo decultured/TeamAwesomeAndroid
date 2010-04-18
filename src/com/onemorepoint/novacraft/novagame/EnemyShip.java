@@ -11,9 +11,9 @@ public class EnemyShip extends GameObject
 	PlayerShip player;
 	ProjectileManager projManager;
 	
-	public EnemyShip(GL10 _gl, PlayerShip p, ProjectileManager _projManager)
+	public EnemyShip(PlayerShip p, ProjectileManager _projManager)
 	{
-		super(_gl);
+		super();
 		
 		positionX = 240.0f;
 		positionY = 854.0f;

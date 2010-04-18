@@ -10,9 +10,9 @@ public class EnemyOverbaron extends EnemyShip
 	private float projectilesToFire;
 	private float projectilesPerSecond;
 	
-	public EnemyOverbaron(GL10 _gl, PlayerShip p, ProjectileManager _projManager)
+	public EnemyOverbaron(PlayerShip p, ProjectileManager _projManager)
 	{
-		super(_gl, p, _projManager);
+		super(p, _projManager);
 		
 		projectilesPerSecond = 0.5f;
 		

@@ -27,7 +27,7 @@ public class NovaBackground
 		return idx;
 	}
 	
-	public boolean Load(GL10 _gl, int setID)
+	public boolean Load(int setID)
 	{
 		NovaImageManager im = NovaImageManager.GetInstance();
 		
@@ -38,7 +38,7 @@ public class NovaBackground
 			images = new NovaSprite[totalImages];
 			for(int i=0; i<totalImages; i++)
 			{
-				NovaSprite ni = new NovaSprite(_gl);
+				NovaSprite ni = new NovaSprite();
 				images[i] = ni;
 			}
 			
@@ -54,7 +54,7 @@ public class NovaBackground
 			images = new NovaSprite[totalImages];
 			for(int i=0; i<totalImages; i++)
 			{
-				NovaSprite ni = new NovaSprite(_gl);
+				NovaSprite ni = new NovaSprite();
 				images[i] = ni;
 			}
 			if(!images[0].UseImage(im.LoadImage(R.raw.space_8))) return false;

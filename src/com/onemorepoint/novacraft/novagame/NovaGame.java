@@ -23,16 +23,16 @@ public class NovaGame extends Game
 	
 	private LinkedList<EnemyShip> enemies;
 	
-	public NovaGame(GL10 _gl)
+	public NovaGame()
 	{
-		super(_gl);
+		super();
 		
-		projManager = new ProjectileManager(_gl);
-		splosionManager = new SplosionManager(_gl);
-        player = new PlayerShip(_gl, projManager);
+		projManager = new ProjectileManager();
+		splosionManager = new SplosionManager();
+        player = new PlayerShip(projManager);
         enemies = new LinkedList<EnemyShip>();
 		background = new NovaBackground();
-        background.Load(_gl, 0);
+        background.Load(0);
 
 		lastSpawn = -2;
 	}
@@ -50,21 +50,21 @@ public class NovaGame extends Game
      		if(scourbsOut < 5)
      		{
 	     		// Spawn enemies
-	     		EnemyScourb scourb = new EnemyScourb(gl, player, projManager);
+	     		EnemyScourb scourb = new EnemyScourb(player, projManager);
 	     		enemies.addLast(scourb);
 	     		scourbsOut++;
 	     	}
      		
      		if(overbaronsOut < 1)
      		{
-     			EnemyOverbaron baron = new EnemyOverbaron(gl, player, projManager);
+     			EnemyOverbaron baron = new EnemyOverbaron(player, projManager);
 	     		enemies.addLast(baron);
 	     		overbaronsOut++;
 	     	}
 	     	
 	     	if(mutalusksOut < 3)
 	     	{
-	     		EnemyMutalusk muta = new EnemyMutalusk(gl, player, projManager);
+	     		EnemyMutalusk muta = new EnemyMutalusk(player, projManager);
 	     		enemies.addLast(muta);
 	     		mutalusksOut++;
 	     	}

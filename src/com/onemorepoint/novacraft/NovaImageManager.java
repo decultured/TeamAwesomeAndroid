@@ -10,22 +10,19 @@ public class NovaImageManager
 	public static NovaImageManager instance = null;
 	
 	static LinkedList<NovaImage> images;
-	static GL10 gl;
 	
-	public NovaImageManager(GL10 _gl)
+	public NovaImageManager()
 	{	
 		images = new LinkedList<NovaImage>();
-		gl = _gl;
 		
 		if(instance == null)
 			instance = this;
-		else instance.gl = _gl;
 	}
 	
 	public static NovaImageManager GetInstance()
 	{
 		if(instance == null)
-			instance = new NovaImageManager(null);
+			instance = new NovaImageManager();
 			
 		return instance;
 	}
@@ -56,17 +53,12 @@ public class NovaImageManager
 		}
 			
 		img = new NovaImage();
-		if(!img.LoadImage(resourceId, gl))
+		if(!img.LoadImage(resourceId))
 			return null;
 			
 		images.addLast(img);
 		
 		return img;
-	}
-	
-	public GL10 GetGL()
-	{
-		return gl;
 	}
 	
 	public void ReloadTextures()
@@ -77,7 +69,7 @@ public class NovaImageManager
 		while(iterator.hasNext())
 		{	
 			NovaImage thisImg = (NovaImage)iterator.next();
-			thisImg.LoadImage(thisImg.GetResourceID(), gl);
+			thisImg.LoadImage(thisImg.GetResourceID());
 		}
 	}
 }

@@ -10,9 +10,9 @@ public class Projectile extends GameObject
 	public boolean fromPlayer;
 	public float lifeSpan;
 
-	public Projectile(GL10 _gl)
+	public Projectile()
 	{
-		super(_gl);
+		super();
 
 		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.plasma));
 	}

@@ -12,25 +12,25 @@ public class Splosion extends GameObject
 	public float frameTime = 0.0f;
 	public float frameLength = 0.11f;
 	
-	public Splosion(GL10 _gl)
+	public Splosion()
 	{
-		super(_gl);
+		super();
 
 		s = new NovaSprite[5];
 
-		s[0] = new NovaSprite(gl);
+		s[0] = new NovaSprite();
 		s[0].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.explosion_1));
 
-		s[1] = new NovaSprite(gl);
+		s[1] = new NovaSprite();
 		s[1].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.explosion_2));
 
-		s[2] = new NovaSprite(gl);
+		s[2] = new NovaSprite();
 		s[2].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.explosion_3));
 
-		s[3] = new NovaSprite(gl);
+		s[3] = new NovaSprite();
 		s[3].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.explosion_4));
 
-		s[4] = new NovaSprite(gl);
+		s[4] = new NovaSprite();
 		s[4].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.explosion_5));
 
 		sprite = s[0];

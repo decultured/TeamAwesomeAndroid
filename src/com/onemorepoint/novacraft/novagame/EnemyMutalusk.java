@@ -12,24 +12,24 @@ public class EnemyMutalusk extends EnemyShip
 	private float projectilesToFire;
 	private float projectilesPerSecond;
 	
-	public EnemyMutalusk(GL10 _gl, PlayerShip p, ProjectileManager _projManager)
+	public EnemyMutalusk(PlayerShip p, ProjectileManager _projManager)
 	{
-		super(_gl, p, _projManager);
+		super(p, _projManager);
 
 		health = 500;
 		lastFrame = 0;
 		projectilesPerSecond = 1.0f;
 
-		spriteF1 = new NovaSprite(gl);
+		spriteF1 = new NovaSprite();
 		spriteF1.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.mutalusk_1));
 		
-		spriteF2 = new NovaSprite(gl);
+		spriteF2 = new NovaSprite();
 		spriteF2.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.mutalusk_2));
 		
-		spriteF3 = new NovaSprite(gl);
+		spriteF3 = new NovaSprite();
 		spriteF3.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.mutalusk_3));
 		
-		spriteF4 = new NovaSprite(gl);
+		spriteF4 = new NovaSprite();
 		spriteF4.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.mutalusk_4));
 		
 		sprite = spriteF1;

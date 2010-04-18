@@ -19,9 +19,9 @@ public class PlayerShip extends GameObject
 	
 	float health;
 	
-	public PlayerShip(GL10 _gl, ProjectileManager _projManager)
+	public PlayerShip(ProjectileManager _projManager)
 	{
-		super(_gl);
+		super();
 		
 		health = 100.0f;
 
@@ -30,10 +30,10 @@ public class PlayerShip extends GameObject
 
 		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_normal));
 		
-		spriteL = new NovaSprite(gl);
+		spriteL = new NovaSprite();
 		spriteL.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_left));
 		
-		spriteR = new NovaSprite(gl);
+		spriteR = new NovaSprite();
 		spriteR.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_right));
 		
 		currentSprite = sprite;
