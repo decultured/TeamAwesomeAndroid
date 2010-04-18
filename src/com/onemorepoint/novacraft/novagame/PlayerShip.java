@@ -5,14 +5,10 @@ import javax.microedition.khronos.opengles.GL10;
 import com.onemorepoint.novacraft.game.*;
 
 public class PlayerShip extends GameObject
-<<<<<<< HEAD
 {
-=======
-{	
 	NovaSprite spriteL;
 	NovaSprite spriteR;
 	NovaSprite currentSprite;
->>>>>>> 4c6a59cd57bcea0f608898ac1b63e063a4cb7c86
 	
 	public PlayerShip(GL10 _gl)
 	{
