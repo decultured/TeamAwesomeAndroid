@@ -14,6 +14,7 @@ public class NovaGame extends Game
 {
 	public static NovaGame instance;
 	
+	private boolean gameComplete = false;
 	private int Score = 0;
 	private int Lives = 0;
 	private int Level = 0;
@@ -44,6 +45,9 @@ public class NovaGame extends Game
 		background = new NovaBackground();
 		laserSound = sound.LoadSound(R.raw.laser);
 		
+		background.Load(0);
+		player.SelectShip(PlayerShip.SHIP_WRATH);
+		
 		Reset();
 	}
 	
@@ -53,15 +57,15 @@ public class NovaGame extends Game
 	
 	public float getPlayerHealth() { return player.health; }
 	
-	public void processGameState(boolean isGameOver, int _Score, int _Lives) {
-		if(isGameOver) {
-			Reset();
-		} else {
-			Score = _Score;
-			Lives = _Lives;
-			
-			ChangeLevel();
-		}
+	public void processGameState() {
+		// if(NovaCraft.isGameOver) {
+		// 	Reset();
+		// } else {
+		// 	Score = NovaCraft.gameScore;
+		// 	Lives = NovaCraft.gameLives;
+		// 	
+		// 	ChangeLevel();
+		// }
 	}
 
     @Override
@@ -71,6 +75,18 @@ public class NovaGame extends Game
 		projManager.Update(elapsedTime);
 		splosionManager.Update(elapsedTime);
 		player.Update(elapsedTime);
+		
+		if(gameComplete == true) {
+			gameComplete = false;
+			
+			if(Lives <= 0) {
+				Reset();
+			} else {
+				ChangeLevel();
+			}
+			
+			return;
+		}
 		
 		if(totalTime - lastSpawn > 1)
      	{
@@ -150,6 +166,7 @@ public class NovaGame extends Game
 		// added GUI update
 		if(NovaCraft.instance != null) {
 			if(!player.isAlive()) {
+				Lives--;
 				GameOver();
 			}
 		}
@@ -178,22 +195,23 @@ public class NovaGame extends Game
 	}
 	
 	public void GameOver() {
+		gameComplete = true;
+		
 		View v = NovaCraft.instance.findViewById(R.id.gameMain);
 		
 		Intent intent = new Intent(v.getContext(), NovaGameOverScreen.class);
 		intent.putExtra("com.onemorepoint.novacraft.GameOver", Score);
 		intent.putExtra("com.onemorepoint.novacraft.GameScore", Score);
 		intent.putExtra("com.onemorepoint.novacraft.GameLives", Lives);
+		
 		v.getContext().startActivity(intent);
-		return;
 	}
 	
 	@Override
 	public void ChangeLevel() {
-		Iterator enemyIter = enemies.iterator();
-		while(enemyIter.hasNext()) {
-			enemyIter.remove();
-		}
+		enemies.clear();
+		projManager.Reset();
+		splosionManager.Reset();
 		
 		player.Reset();
 		

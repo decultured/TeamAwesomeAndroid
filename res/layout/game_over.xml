@@ -9,6 +9,6 @@
         <TextView a:id="@+id/playerLives" a:layout_width="fill_parent" a:layout_height="wrap_content" a:text="" a:textSize="28sp" a:textColor="#ff39b54a" a:gravity="center"/>
         <TextView a:id="@+id/widget39" a:layout_width="fill_parent" a:layout_height="wrap_content" a:text="Score:" a:textColor="#9939b54a" a:gravity="center"/>
         <TextView a:id="@+id/playerScore" a:layout_width="fill_parent" a:layout_height="wrap_content" a:text="0" a:textSize="28sp" a:textColor="#ff39b54a" a:gravity="center"/>
+        <ImageView a:id="@+id/btnNextLevel" a:layout_width="200sp" a:layout_height="20sp" a:src="@drawable/next_level" />
     </LinearLayout>
-    <ImageView a:id="@+id/btnNextLevel" a:layout_width="200sp" a:layout_height="20sp" a:src="@drawable/next_level" a:layout_x="60sp" a:layout_y="416sp"/>
 </AbsoluteLayout>

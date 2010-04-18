@@ -21,10 +21,7 @@ public class NovaCraft extends Activity
 	public static NovaCraft instance;
 	private NovaGLSurface mGLSurfaceView;
 	AbsoluteLayout glSurfaceContainer;
-	
-	public static int gameScore = 0;
-	public static int gameLives = 0;
-	public static boolean isGameOver = false;
+	LinearLayout gameHUDBox;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -40,7 +37,9 @@ public class NovaCraft extends Activity
 		setContentView(R.layout.main);
 
         Log.v(TAG, "Welcome to NovaCraft");
-	    
+
+		gameHUDBox = (LinearLayout)findViewById(R.id.gameHUDBox);
+	    gameHUDBox.setVisibility(View.INVISIBLE);
 	    // Create our Preview view and set it as the content of our Activity
 		glSurfaceContainer = (AbsoluteLayout)findViewById(R.id.glSurfaceContainer);
 		
@@ -57,13 +56,14 @@ public class NovaCraft extends Activity
 		super.onResume();
 		mGLSurfaceView.onResume();
 		
-		Intent intent = getIntent();
-		Log.v(NovaCraft.TAG, "Intent passed = "+ intent);
-		if(intent != null) {
-			NovaCraft.isGameOver = intent.getBooleanExtra("com.onemorepoint.novacraft.GameOver", false);
-			NovaCraft.gameScore = intent.getIntExtra("com.onemorepoint.novacraft.GameScore", 0);
-			NovaCraft.gameLives = intent.getIntExtra("com.onemorepoint.novacraft.GameLives", 0);
-		}
+		// Intent intent = getIntent();
+		// Log.v(NovaCraft.TAG, "Intent passed = "+ intent);
+		// if(intent != null) {
+		// 	NovaCraft.hasGameState = true;
+		// 	NovaCraft.isGameOver = intent.getBooleanExtra("com.onemorepoint.novacraft.GameOver", false);
+		// 	NovaCraft.gameScore = intent.getIntExtra("com.onemorepoint.novacraft.GameScore", 0);
+		// 	NovaCraft.gameLives = intent.getIntExtra("com.onemorepoint.novacraft.GameLives", 0);
+		// }
 	}
 
     @Override

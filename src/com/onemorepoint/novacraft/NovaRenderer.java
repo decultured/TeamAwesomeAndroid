@@ -65,8 +65,9 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     {
     	gl = _gl;
     	
-    	if(NovaImageManager.needsReload)
+    	if(NovaImageManager.needsReload) {
     		NovaImageManager.GetInstance().ReloadTextures();
+		}
     	
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();
@@ -77,7 +78,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     
     public void onResume()
     {
-		// gameObject.processGameState(NovaCraft.isGameOver, NovaCraft.gameScore, NovaCraft.gameLives);
+	
     }
     
     public void onPause()

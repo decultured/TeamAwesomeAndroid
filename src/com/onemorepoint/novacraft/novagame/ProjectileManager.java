@@ -76,4 +76,9 @@ public class ProjectileManager
 			proj.Render(elapsedTime);
 		}
 	}
+	
+	public void Reset() {
+		activeProjs.clear();
+		deadProjs.clear();
+	}
 }

@@ -62,4 +62,9 @@ public class SplosionManager
 			splosion.Render(elapsedTime);
 		}
 	}
+	
+	public void Reset() {
+		activeSplosions.clear();
+		deadSplosions.clear();
+	}
 }

@@ -51,7 +51,7 @@ public class NovaGameOverScreen extends Activity
 			gameMessage.setText("GAME OVER");
 			gameMessage.setVisibility(View.VISIBLE);
 		} else {
-			gameMessage.setVisibility(View.GONE);
+			gameMessage.setVisibility(View.INVISIBLE);
 		}
 		
 		ImageView btnNextLevel = (ImageView)findViewById(R.id.btnNextLevel);
@@ -61,12 +61,12 @@ public class NovaGameOverScreen extends Activity
 	View.OnClickListener btnNextLevelListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			Intent myIntent = new Intent(v.getContext(), NovaCraft.class);
-			
-			myIntent.putExtra("com.onemorepoint.novacraft.GameOver", isGameOver);
-			myIntent.putExtra("com.onemorepoint.novacraft.GameLives", gameLives);
-			myIntent.putExtra("com.onemorepoint.novacraft.GameScore", gameScore);
-			
-			startActivityForResult(myIntent, 0);
+			// 
+			// myIntent.putExtra("com.onemorepoint.novacraft.GameOver", isGameOver);
+			// myIntent.putExtra("com.onemorepoint.novacraft.GameLives", gameLives);
+			// myIntent.putExtra("com.onemorepoint.novacraft.GameScore", gameScore);
+			// 
+			startActivity(myIntent);
 		}
 	};
 	
