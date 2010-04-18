@@ -32,6 +32,9 @@ public class NovaGame extends Game
 	private int mutalusksOut = 0;
 	
 	private int laserSound = 0;
+	private int mutaDiesSound = 0;
+	private int scourbDiesSound = 0;
+	private int baronDiesSound = 0;
 	
 	private LinkedList<EnemyShip> enemies;
 	
@@ -42,12 +45,15 @@ public class NovaGame extends Game
 		instance = this;
 		
 		projManager = new ProjectileManager();
-		splosionManager = new SplosionManager();
+		splosionManager = SplosionManager.GetInstance();
 		player = new PlayerShip(projManager);
 		enemies = new LinkedList<EnemyShip>();
 		background = new NovaBackground();
 		laserSound = sound.LoadSound(R.raw.laser);
-		
+        mutaDiesSound = sound.LoadSound(R.raw.mutalusk_dies);
+        scourbDiesSound = sound.LoadSound(R.raw.scourb_dies);
+        baronDiesSound = sound.LoadSound(R.raw.overbaron_dies);
+
 		powerups = new Powerup[numPowerups];
 		
 		for (int i = 0; i < numPowerups; i++)
@@ -111,7 +117,7 @@ public class NovaGame extends Game
 		
 		if(totalTime - lastSpawn > 1)
      	{
-     		sound.pool.play(laserSound, 1, 1, 1, 0, 1);
+     		//sound.pool.play(laserSound, 1, 1, 1, 0, 1);
      		
      		if(scourbsOut < 5)
      		{
@@ -184,17 +190,20 @@ public class NovaGame extends Game
 					Score += 243;
 					overbaronsOut--;
 					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 3);
-					SpawnPowerup(0.25f, enemy.positionX, enemy.positionY);
+					SpawnPowerup(0.40f, enemy.positionX, enemy.positionY);
+					sound.pool.play(baronDiesSound, 1, 1, 1, 0, 1);
 				} else if(enemy instanceof EnemyScourb) {
 					Score += 81;
 					scourbsOut--;
 					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 1);
-					SpawnPowerup(0.05f, enemy.positionX, enemy.positionY);
+					SpawnPowerup(0.10f, enemy.positionX, enemy.positionY);
+					sound.pool.play(scourbDiesSound, 1, 1, 1, 0, 1);
 				} else if(enemy instanceof EnemyMutalusk) {
 					Score += 152;
 					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 2);
-					SpawnPowerup(0.15f, enemy.positionX, enemy.positionY);
+					SpawnPowerup(0.20f, enemy.positionX, enemy.positionY);
 					mutalusksOut--;
+					sound.pool.play(mutaDiesSound, 1, 1, 1, 0, 1);
 				}
 				
 				enemyIter.remove();

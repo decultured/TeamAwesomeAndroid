@@ -18,7 +18,7 @@ public class EnemyMutalusk extends EnemyShip
 
 		health = 100;
 		lastFrame = 0;
-		projectilesPerSecond = 1.0f;
+		projectilesPerSecond = 0.667f;
 
 		spriteF1 = new NovaSprite();
 		spriteF1.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.mutalusk_1));

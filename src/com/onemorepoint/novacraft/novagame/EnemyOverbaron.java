@@ -14,7 +14,7 @@ public class EnemyOverbaron extends EnemyShip
 	{
 		super(p, _projManager);
 		
-		projectilesPerSecond = 0.5f;
+		projectilesPerSecond = 0.3333f;
 		
 		health = 500;
 		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.overbaron_1));
