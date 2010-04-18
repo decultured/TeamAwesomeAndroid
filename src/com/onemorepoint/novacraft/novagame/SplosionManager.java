@@ -12,12 +12,9 @@ public class SplosionManager
 {
 	private LinkedList<Splosion> activeSplosions;
 	private LinkedList<Splosion> deadSplosions;
-	
-	protected GL10 gl;
 
-	public SplosionManager(GL10 _gl)
+	public SplosionManager()
 	{
-		gl = _gl;
 		activeSplosions = new LinkedList<Splosion>();
 		deadSplosions = new LinkedList<Splosion>();
 	}
@@ -31,7 +28,7 @@ public class SplosionManager
 			Splosion newSplosion;
 			
 			if (deadSplosions.size() == 0)
-				newSplosion = new Splosion(gl);
+				newSplosion = new Splosion();
 			else
 				newSplosion = deadSplosions.removeLast();
 			

@@ -12,12 +12,9 @@ public class ProjectileManager
 {
 	private LinkedList<Projectile> activeProjs;
 	private LinkedList<Projectile> deadProjs;
-	
-	protected GL10 gl;
 
-	public ProjectileManager(GL10 _gl)
+	public ProjectileManager()
 	{
-		gl = _gl;
 		activeProjs = new LinkedList<Projectile>();
 		deadProjs = new LinkedList<Projectile>();
 	}
@@ -26,7 +23,7 @@ public class ProjectileManager
 	{
 		if (deadProjs.size() == 0)
 		{
-			Projectile newProj = new Projectile(gl);
+			Projectile newProj = new Projectile();
 			newProj.Reset(_x, _y, _xDir, _yDir, _speed, _lifeSpan, _fromPlayer);
 			activeProjs.addLast(newProj);
 			return;

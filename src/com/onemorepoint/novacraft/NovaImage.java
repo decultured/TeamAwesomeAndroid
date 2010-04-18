@@ -26,7 +26,7 @@ public class NovaImage
 		resourceID = 0;
 	}
 			
-	public Boolean LoadImage(int resourceId, GL10 gl)
+	public Boolean LoadImage(int resourceId)
 	{
 		Bitmap partyOBits = BitmapFactory.decodeResource(NovaCraft.instance.getResources(), resourceId);
 		if(partyOBits == null)
@@ -44,31 +44,31 @@ public class NovaImage
 		bb.position(0);
 		
 		
-		gl.glPixelStorei(gl.GL_UNPACK_ALIGNMENT, 1);
+		NovaRenderer.gl.glPixelStorei(NovaRenderer.gl.GL_UNPACK_ALIGNMENT, 1);
 		
 		if(texID != 0)
 		{
 			int [] texIDA = new int[1];
 			texIDA[0] = texID;
-			gl.glDeleteTextures(1, texIDA, 0);
+			NovaRenderer.gl.glDeleteTextures(1, texIDA, 0);
 			texID = 0;
 		}
 		
 		int [] texIDA = new int[1];
-		gl.glGenTextures(1, texIDA, 0);
+		NovaRenderer.gl.glGenTextures(1, texIDA, 0);
 		texID = texIDA[0];
-		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
+		NovaRenderer.gl.glBindTexture(NovaRenderer.gl.GL_TEXTURE_2D, texID);
 		
-		gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, partyOBits.hasAlpha() ? gl.GL_RGBA : gl.GL_RGB, partyOBits.getWidth(), partyOBits.getHeight(), 0, partyOBits.hasAlpha() ? gl.GL_RGBA : gl.GL_RGB, partyOBits.hasAlpha() ? gl.GL_UNSIGNED_BYTE : gl.GL_UNSIGNED_SHORT_5_6_5, bb);
-		if(gl.glGetError() > 0)
+		NovaRenderer.gl.glTexImage2D(NovaRenderer.gl.GL_TEXTURE_2D, 0, partyOBits.hasAlpha() ? NovaRenderer.gl.GL_RGBA : NovaRenderer.gl.GL_RGB, partyOBits.getWidth(), partyOBits.getHeight(), 0, partyOBits.hasAlpha() ? NovaRenderer.gl.GL_RGBA : NovaRenderer.gl.GL_RGB, partyOBits.hasAlpha() ? NovaRenderer.gl.GL_UNSIGNED_BYTE : NovaRenderer.gl.GL_UNSIGNED_SHORT_5_6_5, bb);
+		if(NovaRenderer.gl.glGetError() > 0)
 		{
 			Log.e(NovaCraft.TAG, "Failed to load texture:" + resourceId);
 			return false;
 		}
 		else Log.v(NovaCraft.TAG, "Texture loaded:" + resourceId + " with GL ID:" + texID);
 		
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
+		NovaRenderer.gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+		NovaRenderer.gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
 		
 		width = partyOBits.getWidth();
 		height = partyOBits.getHeight();

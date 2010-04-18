@@ -15,9 +15,9 @@ public class Projectile extends GameObject
 	public float lifeSpan;
 	NovaSprite s[];
 
-	public Projectile(GL10 _gl)
+	public Projectile()
 	{
-		super(_gl);
+		super();
 
 		s = new NovaSprite[5];
 

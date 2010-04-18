@@ -19,15 +19,12 @@ public class GameObject
 
 	public boolean visible = true;
 	public boolean active = true;
-
-	public GL10 gl;
 	
 	public NovaSprite sprite;
 
-	public GameObject(GL10 _gl)
+	public GameObject()
 	{
-		gl = _gl;
-		sprite = new NovaSprite(_gl);
+		sprite = new NovaSprite();
 	}
 	
 	public void Translate(float x, float y)

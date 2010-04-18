@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-</LinearLayout>
-
+<AbsoluteLayout xmlns:a="http://schemas.android.com/apk/res/android" a:orientation="vertical" a:layout_width="fill_parent" a:layout_height="fill_parent">
+    <AbsoluteLayout a:id="@+id/glSurfaceContainer" a:layout_width="fill_parent" a:layout_height="fill_parent"/>
+    <LinearLayout a:id="@+id/gameHUDBox" a:layout_width="fill_parent" a:layout_height="18sp" a:padding="2sp" a:orientation="horizontal" a:layout_x="0sp" a:layout_y="0sp" a:background="#55000000">
+        <TextView a:layout_width="wrap_content" a:layout_height="fill_parent" a:text="Score:" a:textColor="#CCFFFFFF" a:textSize="12sp" a:gravity="center"/>
+        <TextView a:id="@+id/gameHUDScore" a:layout_width="wrap_content" a:layout_height="fill_parent" a:text="123123123" a:textSize="12sp" a:textColor="#FFFFFFFF" a:gravity="center"/>
+        <ProgressBar a:id="@+id/gameHUDHealthBar" a:layout_width="100sp" a:layout_height="10sp" a:padding="0sp" a:layout_y="4sp" style="?android:attr/progressBarStyleHorizontal" />
+    </LinearLayout>
+</AbsoluteLayout>

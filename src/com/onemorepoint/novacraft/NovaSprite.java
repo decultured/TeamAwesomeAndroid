@@ -24,7 +24,6 @@ public class NovaSprite
 		
 	private int resourceID;
 	private NovaImage img;
-	private GL10 gl;
 	FloatBuffer vertBuffer;
 	FloatBuffer texCoordBuffer;
 	ShortBuffer indexBuffer;
@@ -33,26 +32,12 @@ public class NovaSprite
 	public float height;
 	float originalWidth;
 	float originalHeight;
-	
+		
 	public NovaSprite()
 	{
-		gl = null;
 		width = height = 0;
 		originalWidth = originalHeight = 0;
 		resourceID = 0;
-	}
-		
-	public NovaSprite(GL10 _gl)
-	{
-		gl = _gl;
-		width = height = 0;
-		originalWidth = originalHeight = 0;
-		resourceID = 0;
-	}
-	
-	public void SetGL(GL10 _gl)
-	{
-		gl = _gl;
 	}
 	
 	private void _BuildVerts()
@@ -155,26 +140,26 @@ public class NovaSprite
 		if(img.GetTextureID() == 0)
 			return;
 			
-		gl.glPushMatrix();
-		gl.glTranslatef(_x-(width*0.5f), _y-(height*0.5f), 0);
-		gl.glBindTexture(gl.GL_TEXTURE_2D, img.GetTextureID());
-		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
-		gl.glTexCoordPointer(2, gl.GL_FLOAT, 0, texCoordBuffer);
-		gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
-		gl.glPopMatrix();
+		NovaRenderer.gl.glPushMatrix();
+		NovaRenderer.gl.glTranslatef(_x-(width*0.5f), _y-(height*0.5f), 0);
+		NovaRenderer.gl.glBindTexture(GL10.GL_TEXTURE_2D, img.GetTextureID());
+		NovaRenderer.gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
+		NovaRenderer.gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texCoordBuffer);
+		NovaRenderer.gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
+		NovaRenderer.gl.glPopMatrix();
 	}
 	public void RenderZ(float _x, float _y)
 	{
 		if(img.GetTextureID() == 0)
 			return;
 			
-		gl.glPushMatrix();
-		gl.glTranslatef(_x, _y, 0);
-		gl.glBindTexture(gl.GL_TEXTURE_2D, img.GetTextureID());
-		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
-		gl.glTexCoordPointer(2, gl.GL_FLOAT, 0, texCoordBuffer);
-		gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
-		gl.glPopMatrix();
+		NovaRenderer.gl.glPushMatrix();
+		NovaRenderer.gl.glTranslatef(_x, _y, 0);
+		NovaRenderer.gl.glBindTexture(GL10.GL_TEXTURE_2D, img.GetTextureID());
+		NovaRenderer.gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
+		NovaRenderer.gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texCoordBuffer);
+		NovaRenderer.gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
+		NovaRenderer.gl.glPopMatrix();
 	}
 	
 	public float GetWidth()

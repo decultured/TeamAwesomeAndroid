@@ -13,11 +13,8 @@ public class Game
 	private long lastTime;
 	private long thisTime;
 
-	protected GL10 gl;
-
-	public Game(GL10 _gl)
+	public Game()
 	{
-		gl = _gl;
 		elapsedTime = 0;
 		thisTime = System.nanoTime();
 	}

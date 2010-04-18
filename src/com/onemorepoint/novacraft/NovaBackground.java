@@ -27,7 +27,7 @@ public class NovaBackground
 		return idx;
 	}
 	
-	public boolean Load(GL10 _gl, int setID)
+	public boolean Load(int setID)
 	{
 		NovaImageManager im = NovaImageManager.GetInstance();
 		
@@ -38,13 +38,14 @@ public class NovaBackground
 			images = new NovaSprite[totalImages];
 			for(int i=0; i<totalImages; i++)
 			{
-				NovaSprite ni = new NovaSprite(_gl);
+				NovaSprite ni = new NovaSprite();
 				images[i] = ni;
 			}
-			if(!images[0].UseImage(im.LoadImage(R.raw.bg_canyon_04))) return false;
-			if(!images[1].UseImage(im.LoadImage(R.raw.bg_canyon_03))) return false;
-			if(!images[2].UseImage(im.LoadImage(R.raw.bg_canyon_02))) return false;
-			if(!images[3].UseImage(im.LoadImage(R.raw.bg_canyon_01))) return false;
+			
+			if(!images[0].UseImage(im.LoadImage(R.raw.bg_canyon_4))) return false;
+			if(!images[1].UseImage(im.LoadImage(R.raw.bg_canyon_3))) return false;
+			if(!images[2].UseImage(im.LoadImage(R.raw.bg_canyon_2))) return false;
+			if(!images[3].UseImage(im.LoadImage(R.raw.bg_canyon_1))) return false;
 		}
 		else if(setID == 1)
 		{
@@ -53,17 +54,17 @@ public class NovaBackground
 			images = new NovaSprite[totalImages];
 			for(int i=0; i<totalImages; i++)
 			{
-				NovaSprite ni = new NovaSprite(_gl);
+				NovaSprite ni = new NovaSprite();
 				images[i] = ni;
 			}
-			if(!images[0].UseImage(im.LoadImage(R.raw.space_08))) return false;
-			if(!images[1].UseImage(im.LoadImage(R.raw.space_07))) return false;
-			if(!images[2].UseImage(im.LoadImage(R.raw.space_06))) return false;
-			if(!images[3].UseImage(im.LoadImage(R.raw.space_05))) return false;
-			if(!images[4].UseImage(im.LoadImage(R.raw.space_04))) return false;
-			if(!images[5].UseImage(im.LoadImage(R.raw.space_03))) return false;
-			if(!images[6].UseImage(im.LoadImage(R.raw.space_02))) return false;
-			if(!images[7].UseImage(im.LoadImage(R.raw.space_01))) return false;
+			if(!images[0].UseImage(im.LoadImage(R.raw.space_8))) return false;
+			if(!images[1].UseImage(im.LoadImage(R.raw.space_7))) return false;
+			if(!images[2].UseImage(im.LoadImage(R.raw.space_6))) return false;
+			if(!images[3].UseImage(im.LoadImage(R.raw.space_5))) return false;
+			if(!images[4].UseImage(im.LoadImage(R.raw.space_4))) return false;
+			if(!images[5].UseImage(im.LoadImage(R.raw.space_3))) return false;
+			if(!images[6].UseImage(im.LoadImage(R.raw.space_2))) return false;
+			if(!images[7].UseImage(im.LoadImage(R.raw.space_1))) return false;
 		}
 		
 		for(int i=0; i<totalImages; i++)

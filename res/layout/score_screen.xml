@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:a="http://schemas.android.com/apk/res/android" a:orientation="vertical" a:layout_width="fill_parent" a:layout_height="fill_parent" a:fadingEdgeLength="0sp">
+    <ImageView a:id="@+id/background" a:layout_width="wrap_content" a:layout_height="wrap_content" a:src="@drawable/novacraft_menu_bg" a:layout_x="0dp" a:layout_y="0dp">
+	</ImageView>
+    <ImageView a:id="@+id/logo" a:layout_width="fill_parent" a:layout_height="43sp" a:src="@drawable/novacraft_start_logo" a:layout_x="2sp" a:layout_y="226sp"/>
+    <LinearLayout a:id="@+id/scoreBox" a:layout_width="fill_parent" a:layout_height="wrap_content" a:padding="20sp" a:orientation="vertical" a:layout_x="0sp" a:layout_y="280sp">
+        <TextView a:id="@+id/widget39" a:layout_width="fill_parent" a:layout_height="wrap_content" a:text="Score:" a:textColor="#9939b54a" a:gravity="center"/>
+        <TextView a:id="@+id/playerScore" a:layout_width="fill_parent" a:layout_height="wrap_content" a:text="123123123" a:textSize="28sp" a:textColor="#ff39b54a" a:gravity="center"/>
+    </LinearLayout>
+    <ImageView a:id="@+id/btnNextLevel" a:layout_width="200sp" a:layout_height="20sp" a:src="@drawable/next_level" a:layout_x="60sp" a:layout_y="386sp"/>
+</AbsoluteLayout>
