@@ -11,7 +11,11 @@ public class PlayerShip extends GameObject
 	ProjectileManager projManager;
 	
 	private float projectilesToFire;
-	private float projectilesPerSecond;
+	private float projectilesPerSecond = 2.0f;
+	private float maxProjectilesPerSecond = 6.0f;
+	private float projectilePower = 1.0f;
+
+	private int alternate = 0;
 
 	NovaSprite spriteL;
 	NovaSprite spriteR;
@@ -26,7 +30,6 @@ public class PlayerShip extends GameObject
 		health = 100.0f;
 
 		projManager = _projManager;
-		projectilesPerSecond = 3.0f;
 
 		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_normal));
 		
@@ -40,6 +43,15 @@ public class PlayerShip extends GameObject
 		
 		positionX = 240.0f;
 		positionY = 140.0f;
+	}
+	
+	public void Powerup(boolean increase)
+	{
+		if (increase && projectilesPerSecond <= maxProjectilesPerSecond - projectilePower) {
+			projectilesPerSecond += projectilePower;
+		} else if (!increase && projectilesPerSecond >= 1.0f + projectilePower) {
+			projectilesPerSecond -= projectilePower;
+		}
 	}
 
     @Override
@@ -66,7 +78,28 @@ public class PlayerShip extends GameObject
 
 		projectilesToFire += elapsedTime * projectilesPerSecond;
 		while (projectilesToFire > 1.0f) {
-			projManager.AddProjectile(positionX, positionY, 0.0f, 1.0f, 300.0f, 8.0f, true);
+			if (projectilesPerSecond < 4.0f) {
+				projManager.AddProjectile(Projectile.PLASMA, positionX, positionY, 0.0f, 1.0f, 300.0f, 8.0f, true);
+			} else if (projectilesPerSecond >= 4.0f && projectilesPerSecond < 5.0f) {
+				if (alternate > 1)
+					alternate = 0;
+				if (alternate == 0)
+					projManager.AddProjectile(Projectile.PLASMA, positionX - 25.0f, positionY, 0.0f, 1.0f, 300.0f, 8.0f, true);
+				else if (alternate == 1)
+					projManager.AddProjectile(Projectile.PLASMA, positionX + 25.0f, positionY, 0.0f, 1.0f, 300.0f, 8.0f, true);
+				alternate++;
+			} else if (projectilesPerSecond >= 5.0f) {
+				if (alternate > 2)
+					alternate = 0;
+				if (alternate == 0)
+					projManager.AddProjectile(Projectile.PLASMA, positionX - 25.0f, positionY, 0.0f, 1.0f, 300.0f, 8.0f, true);
+				else if (alternate == 1)
+					projManager.AddProjectile(Projectile.PLASMA, positionX + 25.0f, positionY, 0.0f, 1.0f, 300.0f, 8.0f, true);
+				else if (alternate == 2)
+					projManager.AddProjectile(Projectile.PLASMA, positionX, positionY, 0.0f, 1.0f, 300.0f, 8.0f, true);
+				alternate++;
+			}
+			
 			projectilesToFire -= 1.0f;	
 		}
 		
