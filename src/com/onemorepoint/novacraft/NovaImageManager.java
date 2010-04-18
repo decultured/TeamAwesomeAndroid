@@ -68,4 +68,16 @@ public class NovaImageManager
 	{
 		return gl;
 	}
+	
+	public void ReloadTextures()
+	{
+		Log.v(NovaCraft.TAG, "Reloading textures...");
+		
+		Iterator iterator = images.iterator();
+		while(iterator.hasNext())
+		{	
+			NovaImage thisImg = (NovaImage)iterator.next();
+			thisImg.LoadImage(thisImg.GetResourceID(), gl);
+		}
+	}
 }

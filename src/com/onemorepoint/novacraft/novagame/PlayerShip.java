@@ -3,16 +3,30 @@ package com.onemorepoint.novacraft.novagame;
 import com.onemorepoint.novacraft.*;
 import javax.microedition.khronos.opengles.GL10;
 import com.onemorepoint.novacraft.game.*;
+import com.onemorepoint.novacraft.novagame.*;
+import android.util.Log;
 
 public class PlayerShip extends GameObject
-{
+{	
+	ProjectileManager projManager;
+	
+	private float projectilesToFire;
+	private float projectilesPerSecond;
+
 	NovaSprite spriteL;
 	NovaSprite spriteR;
 	NovaSprite currentSprite;
 	
-	public PlayerShip(GL10 _gl)
+	float health;
+	
+	public PlayerShip(GL10 _gl, ProjectileManager _projManager)
 	{
 		super(_gl);
+		
+		health = 100.0f;
+
+		projManager = _projManager;
+		projectilesPerSecond = 3.0f;
 
 		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_normal));
 		
@@ -49,6 +63,12 @@ public class PlayerShip extends GameObject
 			currentSprite = sprite;
 			velocityX = 0;
 		}
+
+		projectilesToFire += elapsedTime * projectilesPerSecond;
+		while (projectilesToFire > 1.0f) {
+			projManager.AddProjectile(positionX, positionY, 0.0f, 1.0f, 300.0f, 8.0f, true);
+			projectilesToFire -= 1.0f;	
+		}
 		
 		if(positionX <= 0)
 		{
@@ -72,5 +92,18 @@ public class PlayerShip extends GameObject
         //super.Render(elapsedTime);
 		
 		currentSprite.Render(positionX, positionY);
+	}
+	
+	public boolean Hurt(float damage)
+	{
+		if(damage < 0)
+			return false;
+			
+		health -= damage;
+		Log.v(NovaCraft.TAG, "HEALTH: " + health);
+		
+		if(health <= 0)
+			return true;
+		return false;
 	}
 }

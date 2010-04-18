@@ -13,6 +13,7 @@ public class NovaGame extends Game
 	private int Lives;
 	private NovaBackground background;
 	private PlayerShip player;
+	private ProjectileManager projManager;
 	private float lastSpawn;
 	
 	private int scourbsOut = 0;
@@ -25,19 +26,20 @@ public class NovaGame extends Game
 	{
 		super(_gl);
 		
-		lastSpawn = -2;
-		
+		projManager = new ProjectileManager(_gl);
+        player = new PlayerShip(_gl, projManager);
+        enemies = new LinkedList<EnemyShip>();
 		background = new NovaBackground();
         background.Load(_gl, 0);
-        
-        player = new PlayerShip(_gl);
-        enemies = new LinkedList<EnemyShip>();
+
+		lastSpawn = -2;
 	}
 
     @Override
 	public void Update()
 	{
         super.Update();
+		projManager.Update(elapsedTime);
 		player.Update(elapsedTime);
 		
 		if(totalTime - lastSpawn > 1)
@@ -45,21 +47,21 @@ public class NovaGame extends Game
      		if(scourbsOut < 5)
      		{
 	     		// Spawn enemies
-	     		EnemyScourb scourb = new EnemyScourb(gl, player);
+	     		EnemyScourb scourb = new EnemyScourb(gl, player, projManager);
 	     		enemies.addLast(scourb);
 	     		scourbsOut++;
 	     	}
      		
      		if(overbaronsOut < 1)
      		{
-     			EnemyOverbaron baron = new EnemyOverbaron(gl, player);
+     			EnemyOverbaron baron = new EnemyOverbaron(gl, player, projManager);
 	     		enemies.addLast(baron);
 	     		overbaronsOut++;
 	     	}
 	     	
 	     	if(mutalusksOut < 3)
 	     	{
-	     		EnemyMutalusk muta = new EnemyMutalusk(gl, player);
+	     		EnemyMutalusk muta = new EnemyMutalusk(gl, player, projManager);
 	     		enemies.addLast(muta);
 	     		mutalusksOut++;
 	     	}
@@ -67,17 +69,30 @@ public class NovaGame extends Game
      		lastSpawn = totalTime;
      	}
      	
+     	if (projManager.CollidesWith(player, true, true))
+     	{
+     		if(player.Hurt(20.0f))
+     		{
+     			Log.v(NovaCraft.TAG, "YOU BE DED!");
+     		}
+     	}
+     	
      	Iterator enemyIter = enemies.iterator();
      	while(enemyIter.hasNext())
 		{	
 			EnemyShip enemy = (EnemyShip)enemyIter.next();
-			
+			if (projManager.CollidesWith(enemy, true, false))
+			{
+				enemy.Hurt(1000);
+			}
 			if(enemy.health <= 0)
 			{
 				if(enemy instanceof EnemyOverbaron)
 					overbaronsOut--;
 				else if(enemy instanceof EnemyScourb)
 					scourbsOut--;
+				else if(enemy instanceof EnemyMutalusk)
+					mutalusksOut--;
 					
 				enemyIter.remove();
 			}
@@ -94,6 +109,8 @@ public class NovaGame extends Game
 		background.Render();
      	background.AddOffset(elapsedTime * 180.0f);
      	
+		projManager.Render(elapsedTime);
+
      	Iterator enemyIter = enemies.iterator();
      	while(enemyIter.hasNext())
 		{	

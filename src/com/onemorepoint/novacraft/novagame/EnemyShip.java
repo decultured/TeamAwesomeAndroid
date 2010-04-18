@@ -9,8 +9,9 @@ public class EnemyShip extends GameObject
 	float health;
 	boolean firstMovement;
 	PlayerShip player;
+	ProjectileManager projManager;
 	
-	public EnemyShip(GL10 _gl, PlayerShip p)
+	public EnemyShip(GL10 _gl, PlayerShip p, ProjectileManager _projManager)
 	{
 		super(_gl);
 		
@@ -19,6 +20,7 @@ public class EnemyShip extends GameObject
 		health = 1;
 		firstMovement = true;
 		player = p;
+		projManager = _projManager;
 	}
 
     @Override
@@ -42,7 +44,7 @@ public class EnemyShip extends GameObject
 	// Returns true if shit died
 	public boolean Hurt(float damage)
 	{
-		if(damage > 0)
+		if(damage < 0)
 			return false;
 			
 		health -= damage;

@@ -23,19 +23,19 @@ public class NovaSprite
 	private static final short[] indices = { 0, 1, 2, 0, 2, 3 };
 		
 	private int resourceID;
-	private int texID;
+	private NovaImage img;
 	private GL10 gl;
 	FloatBuffer vertBuffer;
 	FloatBuffer texCoordBuffer;
 	ShortBuffer indexBuffer;
-	float width;
-	float height;
+
+	public float width;
+	public float height;
 	float originalWidth;
 	float originalHeight;
 	
 	public NovaSprite()
 	{
-		texID = 0;
 		gl = null;
 		width = height = 0;
 		originalWidth = originalHeight = 0;
@@ -44,7 +44,6 @@ public class NovaSprite
 		
 	public NovaSprite(GL10 _gl)
 	{
-		texID = 0;
 		gl = _gl;
 		width = height = 0;
 		originalWidth = originalHeight = 0;
@@ -108,27 +107,27 @@ public class NovaSprite
 		_BuildVerts();
 	}
 	
-	public Boolean UseImage(NovaImage img)
+	public Boolean UseImage(NovaImage _img)
 	{	
-		if(img == null)
+		if(_img == null)
 		{
 			Log.d(NovaCraft.TAG, "NovaSprite::UseImage got null img");
 			return false;
 		}
 			
-		if(img.GetTextureID() == 0)
+		if(_img.GetTextureID() == 0)
 		{
 			Log.d(NovaCraft.TAG, "NovaSprite::UseImage got img with null texture ID");
 			return false;
 		}
 			
-		if(img.GetWidth() < 2 || img.GetHeight() < 2)
+		if(_img.GetWidth() < 2 || _img.GetHeight() < 2)
 		{
 			Log.d(NovaCraft.TAG, "NovaSprite::UseImage got img with invalid size");
 			return false;
 		}
 			
-		texID = img.GetTextureID();
+		img = _img;
 		width = originalWidth = img.GetWidth();
 		height = originalHeight = img.GetHeight();
 		
@@ -153,12 +152,12 @@ public class NovaSprite
 	
 	public void Render(float _x, float _y)
 	{
-		if(texID == 0)
+		if(img.GetTextureID() == 0)
 			return;
 			
 		gl.glPushMatrix();
 		gl.glTranslatef(_x-(width*0.5f), _y-(height*0.5f), 0);
-		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
+		gl.glBindTexture(gl.GL_TEXTURE_2D, img.GetTextureID());
 		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
 		gl.glTexCoordPointer(2, gl.GL_FLOAT, 0, texCoordBuffer);
 		gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
@@ -166,12 +165,12 @@ public class NovaSprite
 	}
 	public void RenderZ(float _x, float _y)
 	{
-		if(texID == 0)
+		if(img.GetTextureID() == 0)
 			return;
 			
 		gl.glPushMatrix();
 		gl.glTranslatef(_x, _y, 0);
-		gl.glBindTexture(gl.GL_TEXTURE_2D, texID);
+		gl.glBindTexture(gl.GL_TEXTURE_2D, img.GetTextureID());
 		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
 		gl.glTexCoordPointer(2, gl.GL_FLOAT, 0, texCoordBuffer);
 		gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
