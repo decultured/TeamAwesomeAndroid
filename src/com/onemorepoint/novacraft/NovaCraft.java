@@ -6,7 +6,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.app.Activity;
 import android.view.Window;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.*;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,8 +35,13 @@ public class NovaCraft extends Activity
         Log.v(TAG, "Welcome to NovaCraft");
 	    
 	    // Create our Preview view and set it as the content of our Activity
+		AbsoluteLayout glSurfaceContainer = (AbsoluteLayout)findViewById(R.id.glSurfaceContainer);
+		
+		ProgressBar gameHUDHealthBar = (ProgressBar)findViewById(R.id.gameHUDHealthBar);
+		gameHUDHealthBar.setProgress(45);
+		
         mGLSurfaceView = new NovaGLSurface(this);
-        setContentView(mGLSurfaceView);
+        glSurfaceContainer.addView(mGLSurfaceView);
     }
     
     @Override

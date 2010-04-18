@@ -28,7 +28,7 @@ public class NovaStartMenu extends Activity
         singlePlayerStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), NovaScoreScreen.class);
+                Intent myIntent = new Intent(v.getContext(), NovaCraft.class);
                 startActivityForResult(myIntent, 0);
             }
         });
