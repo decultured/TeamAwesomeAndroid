@@ -11,6 +11,8 @@ public class NovaImageManager
 	
 	static LinkedList<NovaImage> images;
 	
+	public static boolean needsReload = true;
+	
 	public NovaImageManager()
 	{	
 		images = new LinkedList<NovaImage>();
@@ -48,7 +50,7 @@ public class NovaImageManager
 		
 		if(img != null)
 		{
-			Log.v(NovaCraft.TAG, "Reusing image resource " + resourceId);
+			//Log.v(NovaCraft.TAG, "Reusing image resource " + resourceId);
 			return img;
 		}
 			
@@ -71,5 +73,20 @@ public class NovaImageManager
 			NovaImage thisImg = (NovaImage)iterator.next();
 			thisImg.LoadImage(thisImg.GetResourceID());
 		}
+		
+		needsReload = false;
+	}
+	
+	public void FreeTextures()
+	{
+		Log.v(NovaCraft.TAG, "Freeing textures...");
+		Iterator iterator = images.iterator();
+		while(iterator.hasNext())
+		{	
+			NovaImage thisImg = (NovaImage)iterator.next();
+			thisImg.FreeTexture();
+		}
+		
+		needsReload = true;
 	}
 }

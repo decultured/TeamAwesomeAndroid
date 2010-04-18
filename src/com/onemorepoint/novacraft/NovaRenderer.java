@@ -57,11 +57,18 @@ public class NovaRenderer implements GLSurfaceView.Renderer
 		gl.glEnable(gl.GL_TEXTURE_2D);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+		
+		NovaImageManager.GetInstance().ReloadTextures();
+		
+		Log.v(NovaCraft.TAG, "onSurfaceChanged");
     }
     
 
     public void onDrawFrame(GL10 _gl)
     {
+    	if(NovaImageManager.needsReload)
+    		return;
+    		
     	gl = _gl;
     	
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -73,6 +80,16 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     
     public void onResume()
     {
-    	NovaImageManager.GetInstance().ReloadTextures();
+    	
+    }
+    
+    public void onPause()
+    {
+    	NovaImageManager.GetInstance().FreeTextures();
+    }
+    
+    public void onDestroy()
+    {
+    	NovaImageManager.GetInstance().FreeTextures();
     }
 }

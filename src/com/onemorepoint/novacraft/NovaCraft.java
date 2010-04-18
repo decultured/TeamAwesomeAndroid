@@ -18,6 +18,7 @@ public class NovaCraft extends Activity
 	public static final String TAG = "NovaCraft";
 	public static NovaCraft instance;
 	private NovaGLSurface mGLSurfaceView;
+	AbsoluteLayout glSurfaceContainer;
 	
     /** Called when the activity is first created. */
     @Override
@@ -35,7 +36,7 @@ public class NovaCraft extends Activity
         Log.v(TAG, "Welcome to NovaCraft");
 	    
 	    // Create our Preview view and set it as the content of our Activity
-		AbsoluteLayout glSurfaceContainer = (AbsoluteLayout)findViewById(R.id.glSurfaceContainer);
+		glSurfaceContainer = (AbsoluteLayout)findViewById(R.id.glSurfaceContainer);
 		
 		ProgressBar gameHUDHealthBar = (ProgressBar)findViewById(R.id.gameHUDHealthBar);
 		gameHUDHealthBar.setProgress(45);
@@ -61,5 +62,14 @@ public class NovaCraft extends Activity
         // to take appropriate action when the activity looses focus
         super.onPause();
         mGLSurfaceView.onPause();
+    }
+    
+    @Override
+    protected void onDestroy()
+    {
+    	super.onDestroy();
+    	mGLSurfaceView.onDestroy();
+    	glSurfaceContainer.removeView(mGLSurfaceView);
+    	mGLSurfaceView = null;
     }
 }
