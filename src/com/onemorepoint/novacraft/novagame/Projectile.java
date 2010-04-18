@@ -7,14 +7,30 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class Projectile extends GameObject
 {	
+	public static int PLASMA = 0;
+	public static int OVER_BARON_SPOOGE = 1;
+	public static int MUTALISK_BALLS = 2;
+
 	public boolean fromPlayer;
 	public float lifeSpan;
+	NovaSprite s[];
 
 	public Projectile(GL10 _gl)
 	{
 		super(_gl);
 
-		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.plasma));
+		s = new NovaSprite[5];
+
+		s[0] = new NovaSprite(gl);
+		s[0].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.plasma));
+
+		s[1] = new NovaSprite(gl);
+		s[1].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.overbaronspooge));
+
+		s[2] = new NovaSprite(gl);
+		s[2].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.mutaliskballs));
+		
+		sprite = s[0];
 	}
 
 	public void Reset(float _x, float _y, float _xDir, float _yDir, float _speed, float _lifeSpan, boolean _fromPlayer)
