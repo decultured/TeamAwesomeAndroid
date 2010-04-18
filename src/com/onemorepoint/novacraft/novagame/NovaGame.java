@@ -14,6 +14,7 @@ public class NovaGame extends Game
 	private NovaBackground background;
 	private PlayerShip player;
 	private ProjectileManager projManager;
+	private SplosionManager splosionManager;
 	private float lastSpawn;
 	
 	private int scourbsOut = 0;
@@ -27,6 +28,7 @@ public class NovaGame extends Game
 		super(_gl);
 		
 		projManager = new ProjectileManager(_gl);
+		splosionManager = new SplosionManager(_gl);
         player = new PlayerShip(_gl, projManager);
         enemies = new LinkedList<EnemyShip>();
 		background = new NovaBackground();
@@ -40,6 +42,7 @@ public class NovaGame extends Game
 	{
         super.Update();
 		projManager.Update(elapsedTime);
+		splosionManager.Update(elapsedTime);
 		player.Update(elapsedTime);
 		
 		if(totalTime - lastSpawn > 1)
@@ -79,11 +82,16 @@ public class NovaGame extends Game
 			}
 			if(enemy.health <= 0)
 			{
-				if(enemy instanceof EnemyOverbaron)
+				if(enemy instanceof EnemyOverbaron) {
 					overbaronsOut--;
-				else if(enemy instanceof EnemyScourb)
+					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 3);
+				} else if(enemy instanceof EnemyScourb) {
 					scourbsOut--;
-					
+					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 1);
+				} else {
+					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 2);
+				}
+			
 				enemyIter.remove();
 			}
 			else enemy.Update(elapsedTime);
@@ -99,6 +107,7 @@ public class NovaGame extends Game
 		background.Render();
      	background.AddOffset(elapsedTime * 180.0f);
      	
+		splosionManager.Render(elapsedTime);
 		projManager.Render(elapsedTime);
 
      	Iterator enemyIter = enemies.iterator();
