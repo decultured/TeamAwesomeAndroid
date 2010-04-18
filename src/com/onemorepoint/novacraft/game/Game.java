@@ -12,11 +12,14 @@ public class Game
 	
 	private long lastTime;
 	private long thisTime;
+	
+	public NovaSoundManager sound;
 
 	public Game()
 	{
 		elapsedTime = 0;
 		thisTime = System.nanoTime();
+		sound = new NovaSoundManager();
 	}
 
 	private void UpdateTime()

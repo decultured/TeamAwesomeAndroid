@@ -47,21 +47,28 @@ public class PlayerShip extends GameObject
 	{
 		if (Input.isDown)
 		{
-			if(Input.xPos < 240.0f)
+			if(Input.xPos < positionX - 24 && positionX > 32.0f)
 			{
-				velocityX = -200.0f;
+				velocityX = -300.0f;
 				currentSprite = spriteL;
 			}
-			else if(Input.xPos > 240.0f)
+			else if(Input.xPos > positionX + 24 && positionX < 448.0f)
 			{
-				velocityX = 200.0f;
+				velocityX = 300.0f;
 				currentSprite = spriteR;
-			}
+			} else velocityX = 0.0f;
+			
+			if(Input.yPos < positionY - 32 && positionY > 32.0f)
+				velocityY = -200.0f;
+			else if(Input.yPos > positionY + 32 && positionY < 300.0f)
+				velocityY = 200.0f;
+			else velocityY = 0.0f;
 		}
 		else
 		{
 			currentSprite = sprite;
 			velocityX = 0;
+			velocityY = 0;
 		}
 
 		projectilesToFire += elapsedTime * projectilesPerSecond;

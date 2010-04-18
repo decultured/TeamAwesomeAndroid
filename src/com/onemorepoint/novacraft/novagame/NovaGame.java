@@ -21,6 +21,8 @@ public class NovaGame extends Game
 	private int overbaronsOut = 0;
 	private int mutalusksOut = 0;
 	
+	private int laserSound = 0;
+	
 	private LinkedList<EnemyShip> enemies;
 	
 	public NovaGame()
@@ -33,6 +35,8 @@ public class NovaGame extends Game
         enemies = new LinkedList<EnemyShip>();
 		background = new NovaBackground();
         background.Load(0);
+        
+        laserSound = sound.LoadSound(R.raw.laser);
 
 		lastSpawn = -2;
 	}
@@ -47,6 +51,8 @@ public class NovaGame extends Game
 		
 		if(totalTime - lastSpawn > 1)
      	{
+     		sound.pool.play(laserSound, 1, 1, 1, 0, 1);
+     		
      		if(scourbsOut < 5)
      		{
 	     		// Spawn enemies
