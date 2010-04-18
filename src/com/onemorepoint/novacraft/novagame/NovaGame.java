@@ -17,7 +17,7 @@ public class NovaGame extends Game
 	
 	private int scourbsOut = 0;
 	private int overbaronsOut = 0;
-	private int mutalisksOut = 0;
+	private int mutalusksOut = 0;
 	
 	private LinkedList<EnemyShip> enemies;
 	
@@ -55,6 +55,13 @@ public class NovaGame extends Game
      			EnemyOverbaron baron = new EnemyOverbaron(gl, player);
 	     		enemies.addLast(baron);
 	     		overbaronsOut++;
+	     	}
+	     	
+	     	if(mutalusksOut < 3)
+	     	{
+	     		EnemyMutalusk muta = new EnemyMutalusk(gl, player);
+	     		enemies.addLast(muta);
+	     		mutalusksOut++;
 	     	}
      		
      		lastSpawn = totalTime;
