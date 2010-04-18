@@ -44,9 +44,9 @@ public class EnemyOverbaron extends EnemyShip
         	
         projectilesToFire += elapsedTime * projectilesPerSecond;
 		while (projectilesToFire > 1.0f) {
-			projManager.AddProjectile(positionX, positionY, 0.283662185f, -0.958924275f, 150.0f, 7.0f, false);
-			projManager.AddProjectile(positionX, positionY, 0.0f, -1.0f, 150.0f, 7.0f, false);
-			projManager.AddProjectile(positionX, positionY, -0.283662185f, -0.958924275f, 150.0f, 7.0f, false);
+			projManager.AddProjectile(Projectile.OVERBARON_SPOOGE, positionX, positionY, 0.283662185f, -0.958924275f, 150.0f, 7.0f, false);
+			projManager.AddProjectile(Projectile.OVERBARON_SPOOGE, positionX, positionY, 0.0f, -1.0f, 150.0f, 7.0f, false);
+			projManager.AddProjectile(Projectile.OVERBARON_SPOOGE, positionX, positionY, -0.283662185f, -0.958924275f, 150.0f, 7.0f, false);
 			projectilesToFire -= 1.0f;	
 		}
         
