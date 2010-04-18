@@ -5,22 +5,20 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class GameObject
 {
-	public float positionX;
-    public float positionY;
-    public float previousPositionX;
-    public float previousPositionY;
-    public float velocityX;
-    public float velocityY;
-    public float accelerationX;
-    public float accelerationY;
+	public float positionX = 0.0f;
+    public float positionY = 0.0f;
+    public float previousPositionX = 0.0f;
+    public float previousPositionY = 0.0f;
+    public float velocityX = 0.0f;
+    public float velocityY = 0.0f;
+    public float accelerationX = 0.0f;
+    public float accelerationY = 0.0f;
+    public float forwardX = 0.0f;
+    public float forwardY = 1.0f;
+	public float timeAlive = 0.0f;
 
-    public float forwardX;
-    public float forwardY;
-	
-	public float timeAlive;
-
-	public boolean visible;
-	public boolean active;
+	public boolean visible = true;
+	public boolean active = true;
 
 	public GL10 gl;
 	
@@ -30,20 +28,6 @@ public class GameObject
 	{
 		gl = _gl;
 		sprite = new NovaSprite(_gl);
-		timeAlive = 0.0f;
-		positionX = 0.0f;
-	    positionY = 0.0f;
-	    previousPositionX = 0.0f;
-	    previousPositionY = 0.0f;
-	    velocityX = 0.0f;
-	    velocityY = 0.0f;
-	    accelerationX = 0.0f;
-	    accelerationY = 0.0f;
-	    forwardX = 0.0f;
-	    forwardY = 1.0f;
-		timeAlive = 0.0f;
-		visible = true;
-		active = true;
 	}
 	
 	public void Translate(float x, float y)

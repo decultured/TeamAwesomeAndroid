@@ -84,7 +84,7 @@ public class NovaSprite
 	}
 	
 	// Passing <= 0 for _w or _h will scale proportional
-	void SetSize(float _w, float _h)
+	public void SetSize(float _w, float _h)
 	{
 		float oldW = width;
 		float oldH = height;
