@@ -42,12 +42,8 @@ public class ProjectileManager
      	Iterator projIter = activeProjs.iterator();
      	while(projIter.hasNext())
 		{	
-//			Log.v(NovaCraft.TAG, "Collision?");
 			Projectile proj = (Projectile)projIter.next();
 			if (proj.active && _isPlayer != proj.fromPlayer && _obj.PointCollidesWithObject(proj)) {
-				Log.v(NovaCraft.TAG, "Collision!");
-				
-//			if (proj.active && _isPlayer != proj.fromPlayer && proj.CollidesWithPoint(_obj)) {
 				if (_remove) {
 					proj.active = false;
 					deadProjs.addLast(proj);

@@ -7,15 +7,15 @@ import java.lang.Math;
 
 public class EnemyOverbaron extends EnemyShip
 {	
-	public EnemyOverbaron(GL10 _gl)
+	public EnemyOverbaron(GL10 _gl, PlayerShip p)
 	{
-		super(_gl);
+		super(_gl, p);
 		
 		health = 500;
 		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.overbaron_1));
 		positionY = 854 + sprite.GetHeight()/2;
 		positionX = (float)Math.random()*480.0f;
-		velocityY = -100;
+		velocityY = -50;
 		velocityX = (float)(Math.random()*40 - 20);
 	}
 
@@ -33,9 +33,9 @@ public class EnemyOverbaron extends EnemyShip
         	velocityY = (float)(Math.random()*-25 - 25);
         
         if(positionX < 68)
-        	velocityX = (float)(Math.random()*20);
-        else if(positionX > 790)
-        	velocityX = (float)(Math.random()*-20);
+        	velocityX = (float)(Math.random()*20 + 20);
+        else if(positionX > 410)
+        	velocityX = (float)(Math.random()*-20 - 20);
         
    	}
 	

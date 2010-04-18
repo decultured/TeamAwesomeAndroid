@@ -6,9 +6,9 @@ import com.onemorepoint.novacraft.game.*;
 
 public class EnemyMutalisk extends EnemyShip
 {	
-	public EnemyMutalisk(GL10 _gl)
+	public EnemyMutalisk(GL10 _gl, PlayerShip p)
 	{
-		super(_gl);
+		super(_gl, p);
 		
 		health = 100;
 		
