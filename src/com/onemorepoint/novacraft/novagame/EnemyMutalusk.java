@@ -73,7 +73,7 @@ public class EnemyMutalusk extends EnemyShip
         
         projectilesToFire += elapsedTime * projectilesPerSecond;
 		while (projectilesToFire > 1.0f) {
-			projManager.AddProjectile(positionX, positionY, 0.0f, -1.0f, 250.0f, 7.0f, false);
+			projManager.AddProjectile(Projectile.MUTALISK_BALLS, positionX, positionY, 0.0f, -1.0f, 250.0f, 7.0f, false);
 			projectilesToFire -= 1.0f;	
 		}
    	}
