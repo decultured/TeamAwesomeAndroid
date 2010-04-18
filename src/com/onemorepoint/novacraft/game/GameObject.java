@@ -102,4 +102,8 @@ public class GameObject
 			
 		sprite.Render(positionX,positionY);	
 	}
+	
+	public void Reset() {
+		
+	}
 }

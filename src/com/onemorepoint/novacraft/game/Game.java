@@ -45,4 +45,12 @@ public class Game
 	{
 		
 	}
+	
+	public void ChangeLevel() {
+		
+	}
+	
+	public void Reset() {
+		
+	}
 }

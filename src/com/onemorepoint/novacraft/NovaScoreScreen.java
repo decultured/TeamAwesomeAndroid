@@ -27,7 +27,7 @@ public class NovaScoreScreen extends Activity
         setContentView(R.layout.score_screen);
         
         TextView playerScore = (TextView)findViewById(R.id.playerScore);
-        playerScore.setText("123981");
+        playerScore.setText( getIntent().getStringExtra("GAME_SCORE") );
         
         ImageView btnNextLevel = (ImageView)findViewById(R.id.btnNextLevel);
         btnNextLevel.setOnClickListener(new View.OnClickListener() {

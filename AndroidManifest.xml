@@ -19,6 +19,15 @@
                   android:launchMode="singleInstance"
                   android:clearTaskOnLaunch="true"
                   android:screenOrientation="portrait" />
+        
+          <activity android:name=".NovaGameOverScreen"
+                    android:label="@string/app_name"
+                    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                    android:launchMode="singleInstance"
+                    android:clearTaskOnLaunch="true"
+                    android:screenOrientation="portrait" />
+                    
+        
         <activity android:name=".NovaCraft"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance"

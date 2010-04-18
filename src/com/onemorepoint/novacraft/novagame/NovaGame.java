@@ -4,13 +4,19 @@ import javax.microedition.khronos.opengles.GL10;
 import com.onemorepoint.novacraft.game.*;
 import com.onemorepoint.novacraft.*;
 import android.util.Log;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.View;
 import java.util.LinkedList;
 import java.util.Iterator;
 
 public class NovaGame extends Game
 {
-	private int Score;
-	private int Lives;
+	public static NovaGame instance;
+	
+	private int Score = 0;
+	private int Lives = 0;
+	private int Level = 0;
 	private NovaBackground background;
 	private PlayerShip player;
 	private ProjectileManager projManager;
@@ -27,14 +33,32 @@ public class NovaGame extends Game
 	{
 		super();
 		
+		instance = this;
+		
 		projManager = new ProjectileManager();
 		splosionManager = new SplosionManager();
-        player = new PlayerShip(projManager);
-        enemies = new LinkedList<EnemyShip>();
+		player = new PlayerShip(projManager);
+		enemies = new LinkedList<EnemyShip>();
 		background = new NovaBackground();
-        background.Load(0);
-
-		lastSpawn = -2;
+		
+		Reset();
+	}
+	
+	public int getScore() { return Score; }
+	public int getLives() { return Lives; }
+	public int getLevel() { return Level; }
+	
+	public float getPlayerHealth() { return player.health; }
+	
+	public void processGameState(boolean isGameOver, int _Score, int _Lives) {
+		if(isGameOver) {
+			Reset();
+		} else {
+			Score = _Score;
+			Lives = _Lives;
+			
+			ChangeLevel();
+		}
 	}
 
     @Override
@@ -87,6 +111,7 @@ public class NovaGame extends Game
 			if (projManager.CollidesWith(enemy, true, false))
 			{
 				enemy.Hurt(51);
+				Score += 27;
 			}
 			else if(enemy instanceof EnemyScourb)
 			{
@@ -99,19 +124,29 @@ public class NovaGame extends Game
 			if(enemy.health <= 0)
 			{
 				if(enemy instanceof EnemyOverbaron) {
+					Score += 243;
 					overbaronsOut--;
 					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 3);
 				} else if(enemy instanceof EnemyScourb) {
+					Score += 81;
 					scourbsOut--;
 					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 1);
 				} else if(enemy instanceof EnemyMutalusk) {
+					Score += 152;
 					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 2);
 					mutalusksOut--;
 				}
-			
+				
 				enemyIter.remove();
 			}
 			else enemy.Update(elapsedTime);
+		}
+		
+		// added GUI update
+		if(NovaCraft.instance != null) {
+			if(!player.isAlive()) {
+				GameOver();
+			}
 		}
 	}
 	
@@ -135,5 +170,56 @@ public class NovaGame extends Game
 		}
 		
 		player.Render(elapsedTime);
+	}
+	
+	public void GameOver() {
+		View v = NovaCraft.instance.findViewById(R.id.gameMain);
+		
+		Intent intent = new Intent(v.getContext(), NovaGameOverScreen.class);
+		intent.putExtra("com.onemorepoint.novacraft.GameOver", Score);
+		intent.putExtra("com.onemorepoint.novacraft.GameScore", Score);
+		intent.putExtra("com.onemorepoint.novacraft.GameLives", Lives);
+		v.getContext().startActivity(intent);
+		return;
+	}
+	
+	@Override
+	public void ChangeLevel() {
+		Iterator enemyIter = enemies.iterator();
+		while(enemyIter.hasNext()) {
+			enemyIter.remove();
+		}
+		
+		player.Reset();
+		
+		scourbsOut = 0;
+		overbaronsOut = 0;
+		mutalusksOut = 0;
+		
+		lastSpawn = 0;
+		
+		Level++;
+		
+		if(Level % 2 == 0) {
+			background.Load(1);
+			player.SelectShip(PlayerShip.SHIP_SCOOT);
+		} else {
+			background.Load(0);
+			player.SelectShip(PlayerShip.SHIP_WRATH);
+		}
+		
+		Log.v(NovaCraft.TAG, "Level changed: "+ Level);
+	}
+	
+	@Override
+	public void Reset() {
+		Log.v(NovaCraft.TAG, "Game reset started");
+		Score = 0;
+		Lives = 5;
+		Level = 0;
+		
+		ChangeLevel();
+		
+		Log.v(NovaCraft.TAG, "Game reset finished");
 	}
 }

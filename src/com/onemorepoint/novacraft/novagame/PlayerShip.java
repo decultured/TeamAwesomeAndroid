@@ -8,6 +8,9 @@ import android.util.Log;
 
 public class PlayerShip extends GameObject
 {	
+	public static int SHIP_SCOOT = 0;
+	public static int SHIP_WRATH = 1;
+	
 	ProjectileManager projManager;
 	
 	private float projectilesToFire;
@@ -23,23 +26,9 @@ public class PlayerShip extends GameObject
 	{
 		super();
 		
-		health = 100.0f;
-
 		projManager = _projManager;
-		projectilesPerSecond = 3.0f;
-
-		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_normal));
 		
-		spriteL = new NovaSprite();
-		spriteL.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_left));
-		
-		spriteR = new NovaSprite();
-		spriteR.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_right));
-		
-		currentSprite = sprite;
-		
-		positionX = 240.0f;
-		positionY = 140.0f;
+		Reset();
 	}
 
     @Override
@@ -105,5 +94,45 @@ public class PlayerShip extends GameObject
 		if(health <= 0)
 			return true;
 		return false;
+	}
+	
+	public void SelectShip(int shipID) {
+		if(shipID == SHIP_SCOOT) {
+			sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_scoot_normal));
+
+			spriteL = new NovaSprite();
+			spriteL.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_scoot_left));
+
+			spriteR = new NovaSprite();
+			spriteR.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_scoot_right));
+
+			currentSprite = sprite;
+		} else if(shipID == SHIP_WRATH) {
+			sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_normal));
+
+			spriteL = new NovaSprite();
+			spriteL.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_left));
+
+			spriteR = new NovaSprite();
+			spriteR.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_right));
+
+			currentSprite = sprite;
+		}
+	}
+	
+	public boolean isAlive() {
+		if(health <= 0)
+			return false;
+		return true;
+	}
+	
+	@Override
+	public void Reset() {
+		health = 100.0f;
+		
+		projectilesPerSecond = 3.0f;
+		
+		positionX = 240.0f;
+		positionY = 140.0f;
 	}
 }

@@ -74,5 +74,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     public void onResume()
     {
     	NovaImageManager.GetInstance().ReloadTextures();
+		
+		// gameObject.processGameState(NovaCraft.isGameOver, NovaCraft.gameScore, NovaCraft.gameLives);
     }
 }
