@@ -86,7 +86,15 @@ public class NovaGame extends Game
 			EnemyShip enemy = (EnemyShip)enemyIter.next();
 			if (projManager.CollidesWith(enemy, true, false))
 			{
-				enemy.Hurt(1000);
+				enemy.Hurt(51);
+			}
+			else if(enemy instanceof EnemyScourb)
+			{
+				if(enemy.CollidesWithObject(player))
+				{
+					enemy.Hurt(1000000);
+					player.Hurt(30);
+				}
 			}
 			if(enemy.health <= 0)
 			{

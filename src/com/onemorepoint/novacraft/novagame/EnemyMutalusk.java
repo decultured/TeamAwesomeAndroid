@@ -16,7 +16,7 @@ public class EnemyMutalusk extends EnemyShip
 	{
 		super(p, _projManager);
 
-		health = 500;
+		health = 100;
 		lastFrame = 0;
 		projectilesPerSecond = 1.0f;
 
