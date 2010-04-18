@@ -10,7 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-//import game;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class NovaStartMenu extends Activity
 {
@@ -19,32 +20,17 @@ public class NovaStartMenu extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.start_screen);
         
         ImageView singlePlayerStart = (ImageView)findViewById(R.id.single_player_start);
         singlePlayerStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), NovaCraft.class);
+                Intent myIntent = new Intent(v.getContext(), NovaScoreScreen.class);
                 startActivityForResult(myIntent, 0);
             }
         });
-    }
-    
-    @Override
-    protected void onResume()
-    {
-        // Ideally a game should implement onResume() and onPause()
-        // to take appropriate action when the activity looses focus
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause()
-    {
-        // Ideally a game should implement onResume() and onPause()
-        // to take appropriate action when the activity looses focus
-        super.onPause();
     }
 }
