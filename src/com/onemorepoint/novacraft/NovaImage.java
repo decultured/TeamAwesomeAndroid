@@ -46,6 +46,7 @@ public class NovaImage
 		
 		NovaRenderer.gl.glPixelStorei(NovaRenderer.gl.GL_UNPACK_ALIGNMENT, 1);
 		
+		NovaRenderer.gl.glGetError();
 		if(texID != 0)
 		{
 			int [] texIDA = new int[1];
@@ -74,6 +75,18 @@ public class NovaImage
 		height = partyOBits.getHeight();
 		
 		return true;
+	}
+	
+	public void FreeTexture()
+	{
+		if(texID != 0)
+		{
+			int [] texIDA = new int[1];
+			texIDA[0] = texID;
+			NovaRenderer.gl.glDeleteTextures(1, texIDA, 0);
+			texID = 0;
+			Log.v(NovaCraft.TAG, "Freed texture with resource:" + resourceID);
+		}
 	}
 	
 	int GetTextureID()

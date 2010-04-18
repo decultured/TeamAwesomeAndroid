@@ -20,6 +20,7 @@ public class NovaCraft extends Activity
 	public static final String TAG = "NovaCraft";
 	public static NovaCraft instance;
 	private NovaGLSurface mGLSurfaceView;
+	AbsoluteLayout glSurfaceContainer;
 	
 	public static int gameScore = 0;
 	public static int gameLives = 0;
@@ -37,11 +38,11 @@ public class NovaCraft extends Activity
 			
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
-		Log.v(TAG, "Welcome to NovaCraft");
-		
-		// Create our Preview view and set it as the content of our Activity
-		AbsoluteLayout glSurfaceContainer = (AbsoluteLayout)findViewById(R.id.glSurfaceContainer);
+
+        Log.v(TAG, "Welcome to NovaCraft");
+	    
+	    // Create our Preview view and set it as the content of our Activity
+		glSurfaceContainer = (AbsoluteLayout)findViewById(R.id.glSurfaceContainer);
 		
 		mGLSurfaceView = new NovaGLSurface(this);
 		glSurfaceContainer.addView(mGLSurfaceView);
@@ -65,12 +66,21 @@ public class NovaCraft extends Activity
 		}
 	}
 
-	@Override
-	protected void onPause()
-	{
-		// Ideally a game should implement onResume() and onPause()
-		// to take appropriate action when the activity looses focus
-		super.onPause();
-		mGLSurfaceView.onPause();
-	}
+    @Override
+    protected void onPause()
+    {
+        // Ideally a game should implement onResume() and onPause()
+        // to take appropriate action when the activity looses focus
+        super.onPause();
+        mGLSurfaceView.onPause();
+    }
+    
+    @Override
+    protected void onDestroy()
+    {
+    	super.onDestroy();
+    	mGLSurfaceView.onDestroy();
+    	glSurfaceContainer.removeView(mGLSurfaceView);
+    	mGLSurfaceView = null;
+    }
 }
