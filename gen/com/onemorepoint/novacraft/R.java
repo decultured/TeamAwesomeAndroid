@@ -18,19 +18,18 @@ public final class R {
         public static final int bg_canyon_02=0x7f030001;
         public static final int bg_canyon_03=0x7f030002;
         public static final int bg_canyon_04=0x7f030003;
-        public static final int bg_canyon_1=0x7f030004;
-        public static final int bg_canyon_2=0x7f030005;
-        public static final int bg_canyon_3=0x7f030006;
-        public static final int bg_canyon_4=0x7f030007;
-        public static final int player_ship=0x7f030008;
-        public static final int space_01=0x7f030009;
-        public static final int space_02=0x7f03000a;
-        public static final int space_03=0x7f03000b;
-        public static final int space_04=0x7f03000c;
-        public static final int space_05=0x7f03000d;
-        public static final int space_06=0x7f03000e;
-        public static final int space_07=0x7f03000f;
-        public static final int space_08=0x7f030010;
+        public static final int overbaron_1=0x7f030004;
+        public static final int player_ship_wrath_left=0x7f030005;
+        public static final int player_ship_wrath_normal=0x7f030006;
+        public static final int player_ship_wrath_right=0x7f030007;
+        public static final int space_01=0x7f030008;
+        public static final int space_02=0x7f030009;
+        public static final int space_03=0x7f03000a;
+        public static final int space_04=0x7f03000b;
+        public static final int space_05=0x7f03000c;
+        public static final int space_06=0x7f03000d;
+        public static final int space_07=0x7f03000e;
+        public static final int space_08=0x7f03000f;
     }
     public static final class string {
         public static final int app_name=0x7f040000;

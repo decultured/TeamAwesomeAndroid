@@ -4,6 +4,8 @@ import javax.microedition.khronos.opengles.GL10;
 import com.onemorepoint.novacraft.game.*;
 import com.onemorepoint.novacraft.*;
 import android.util.Log;
+import java.util.LinkedList;
+import java.util.Iterator;
 
 public class NovaGame extends Game
 {
@@ -11,15 +13,21 @@ public class NovaGame extends Game
 	private int Lives;
 	private NovaBackground background;
 	private PlayerShip player;
+	private float lastSpawn;
+	
+	private LinkedList<EnemyShip> enemies;
 	
 	public NovaGame(GL10 _gl)
 	{
 		super(_gl);
 		
+		lastSpawn = -2;
+		
 		background = new NovaBackground();
         background.Load(_gl, 0);
         
         player = new PlayerShip(_gl);
+        enemies = new LinkedList<EnemyShip>();
 	}
 
     @Override
@@ -27,6 +35,21 @@ public class NovaGame extends Game
 	{
         super.Update();
 		player.Update(elapsedTime);
+		
+		if(totalTime - lastSpawn > 3)
+     	{
+     		// Spawn enemies
+     		EnemyOverbaron enemy = new EnemyOverbaron(gl);
+     		enemies.addLast((EnemyShip)enemy);
+     		lastSpawn = totalTime;
+     	}
+     	
+     	Iterator enemyIter = enemies.iterator();
+     	while(enemyIter.hasNext())
+		{	
+			EnemyShip enemy = (EnemyShip)enemyIter.next();
+			enemy.Update(elapsedTime);
+		}
 	}
 	
     @Override
@@ -39,5 +62,12 @@ public class NovaGame extends Game
      	background.AddOffset(elapsedTime * 180.0f);
      	
      	player.Render(elapsedTime);
+     	
+     	Iterator enemyIter = enemies.iterator();
+     	while(enemyIter.hasNext())
+		{	
+			EnemyShip enemy = (EnemyShip)enemyIter.next();
+			enemy.Render(elapsedTime);
+		}
 	}
 }

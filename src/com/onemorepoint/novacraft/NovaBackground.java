@@ -92,7 +92,7 @@ public class NovaBackground
 	public void Render()
 	{
 		images[_AdjustOffset(baseIndex)].RenderZ(0.0f,(float)Math.floor(offset));
-		images[_AdjustOffset(baseIndex+1)].RenderZ(0.0f,(float)Math.floor(offset+screenW));
-		images[_AdjustOffset(baseIndex+2)].RenderZ(0.0f,(float)Math.floor(offset+screenW*2));
+		images[_AdjustOffset(baseIndex+1)].RenderZ(0.0f,(float)Math.floor(offset+screenW) - 1);
+		images[_AdjustOffset(baseIndex+2)].RenderZ(0.0f,(float)Math.floor(offset+screenW*2) - 2);
 	}
 }
