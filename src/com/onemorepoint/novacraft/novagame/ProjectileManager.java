@@ -1,7 +1,10 @@
 package com.onemorepoint.novacraft.novagame;
 
+import android.util.Log;
 import java.util.LinkedList;
+import java.util.Iterator;
 import com.onemorepoint.novacraft.*;
+import com.onemorepoint.novacraft.game.*;
 import com.onemorepoint.novacraft.novagame.*;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -34,15 +37,37 @@ public class ProjectileManager
 		activeProjs.addLast(newProj);
 	}
 
+	public boolean CollidesWith(GameObject _obj, boolean _remove, boolean _isPlayer)
+	{
+     	Iterator projIter = activeProjs.iterator();
+     	while(projIter.hasNext())
+		{	
+//			Log.v(NovaCraft.TAG, "Collision?");
+			Projectile proj = (Projectile)projIter.next();
+			if (proj.active && _isPlayer != proj.fromPlayer && _obj.PointCollidesWithObject(proj)) {
+				Log.v(NovaCraft.TAG, "Collision!");
+				
+//			if (proj.active && _isPlayer != proj.fromPlayer && proj.CollidesWithPoint(_obj)) {
+				if (_remove) {
+					proj.active = false;
+					deadProjs.addLast(proj);
+					projIter.remove();
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void Update(float elapsedTime)
 	{
-		for (int i = 0; i < activeProjs.size(); i++)
-		{
-			Projectile proj = activeProjs.get(i);
+    	Iterator projIter = activeProjs.iterator();
+    	while(projIter.hasNext())
+		{	
+			Projectile proj = (Projectile)projIter.next();
 			if (!proj.active) {
 				deadProjs.addLast(proj);
-				activeProjs.remove(i);
-				i--;
+				projIter.remove();
 				continue;
 			}
 			proj.Update(elapsedTime);
@@ -51,9 +76,10 @@ public class ProjectileManager
 	
 	public void Render(float elapsedTime)
 	{
-		for (int i = 0; i < activeProjs.size(); i++)
-		{
-			Projectile proj = activeProjs.get(i);
+    	Iterator projIter = activeProjs.iterator();
+    	while(projIter.hasNext())
+		{	
+			Projectile proj = (Projectile)projIter.next();
 			proj.Render(elapsedTime);
 		}
 	}

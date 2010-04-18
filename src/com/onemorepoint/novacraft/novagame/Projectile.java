@@ -14,7 +14,7 @@ public class Projectile extends GameObject
 	{
 		super(_gl);
 
-		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.dino));
+		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.plasma));
 	}
 
 	public void Reset(float _x, float _y, float _xDir, float _yDir, float _speed, float _lifeSpan, boolean _fromPlayer)

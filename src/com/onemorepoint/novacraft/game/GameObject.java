@@ -22,9 +22,9 @@ public class GameObject
 	public boolean visible;
 	public boolean active;
 
-	protected GL10 gl;
+	public GL10 gl;
 	
-	protected NovaSprite sprite;
+	public NovaSprite sprite;
 
 	public GameObject(GL10 _gl)
 	{
@@ -77,20 +77,38 @@ public class GameObject
 		AddVelocity(accelerationX * elapsedTime, accelerationY * elapsedTime);
 		Translate(velocityX * elapsedTime, velocityY * elapsedTime);
 	}
-/*
-	public boolean CollidesWith(GameObject _gameObject)
+
+	public boolean CollidesWithPoint(GameObject _gameObject)
 	{
-	    if (Bottom < _gameObject.Top) return false;
-	    if (Top > _gameObject.Bottom) return false;
-	    if (Right < _gameObject.Left) return false;
-	    if (Left > _gameObject.Right) return false;
+		float halfW = sprite.width * 0.5f;
+		float halfH = sprite.height * 0.5f;
+		
+	    if (positionY + halfH < _gameObject.positionY) return false;
+	    if (positionY - halfH > _gameObject.positionY) return false;
+	    if (positionX - halfW > _gameObject.positionX) return false;
+	    if (positionX + halfW < _gameObject.positionX) return false;
 
 	    return true;
 	}
-*/	
+	
+	public boolean PointCollidesWithObject(GameObject _gameObject)
+	{
+		float halfW = sprite.width * 0.5f;
+		float halfH = sprite.height * 0.5f;
+		
+	    if (_gameObject.positionY + halfH < positionY) return false;
+	    if (_gameObject.positionY - halfH > positionY) return false;
+	    if (_gameObject.positionX - halfW > positionX) return false;
+	    if (_gameObject.positionX + halfW < positionX) return false;
+
+	    return true;
+	}
 	
 	public void Render(float elapsedTime)
 	{
+		if(!visible)
+			return;
+			
 		sprite.Render(positionX,positionY);	
 	}
 }

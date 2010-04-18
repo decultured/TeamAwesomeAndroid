@@ -28,8 +28,9 @@ public class NovaSprite
 	FloatBuffer vertBuffer;
 	FloatBuffer texCoordBuffer;
 	ShortBuffer indexBuffer;
-	float width;
-	float height;
+
+	public float width;
+	public float height;
 	float originalWidth;
 	float originalHeight;
 	
