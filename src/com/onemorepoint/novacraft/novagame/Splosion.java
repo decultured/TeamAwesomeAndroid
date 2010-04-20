@@ -16,7 +16,7 @@ public class Splosion extends GameObject
 	{
 		super();
 		
-		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.explosion, 128, 128));
+		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.explosion, 64, 64));
 	}
 
 	public void Reset(float _x, float _y, float _width, float _height)
@@ -34,7 +34,7 @@ public class Splosion extends GameObject
 	public void Update(float elapsedTime)
 	{
         super.Update(elapsedTime);
-
+		
 		frameTime += elapsedTime;
 		
 		if (frameTime > frameLength) {
@@ -42,8 +42,7 @@ public class Splosion extends GameObject
 			frame++;
 		}
 		
-		if (frame > 4) {
-			frame = 4;
+		if (frame > 7) {
 			active = false;
 		}
 	}
@@ -51,6 +50,7 @@ public class Splosion extends GameObject
     @Override
 	public void Render(float elapsedTime)
 	{
-        super.Render(elapsedTime, frame);
+		if(active)
+			super.Render(elapsedTime, frame);
 	}
 }
