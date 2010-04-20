@@ -3,6 +3,8 @@ package com.onemorepoint.novacraft;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.view.Window;
 import android.view.View;
@@ -23,6 +25,10 @@ public class NovaCraft extends Activity
 	AbsoluteLayout glSurfaceContainer;
 	LinearLayout gameHUDBox;
 	
+	public static Handler hRefresh;
+	public static int MSG_UPDATE_GUI = 100;
+	
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -38,13 +44,44 @@ public class NovaCraft extends Activity
 
         Log.v(TAG, "Welcome to NovaCraft");
 
-		gameHUDBox = (LinearLayout)findViewById(R.id.gameHUDBox);
-	    gameHUDBox.setVisibility(View.INVISIBLE);
 	    // Create our Preview view and set it as the content of our Activity
 		glSurfaceContainer = (AbsoluteLayout)findViewById(R.id.glSurfaceContainer);
 		
 		mGLSurfaceView = new NovaGLSurface(this);
 		glSurfaceContainer.addView(mGLSurfaceView);
+		
+		hRefresh = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				if(msg.what == MSG_UPDATE_GUI) {
+					updateGameHUD();
+				}
+			}
+		};
+	}
+	
+	public void updateGameHUD() {
+		NovaGame gameObject = NovaGame.instance;
+		
+		TextView gameHUDScore = (TextView)NovaCraft.instance.findViewById(R.id.gameHUDScore);
+		if(gameHUDScore != null) {
+			try {
+				gameHUDScore.setText("" + gameObject.getScore());
+			} catch(Exception e) {
+				Log.v(NovaCraft.TAG, ""+ e);
+			}
+		}
+		
+		TextView gameHUDLives = (TextView)NovaCraft.instance.findViewById(R.id.gameHUDLives);
+		if(gameHUDLives != null) {
+			gameHUDLives.setText("" + gameObject.getLives());
+		}
+					
+		ProgressBar gameHUDHealthBar = (ProgressBar)NovaCraft.instance.findViewById(R.id.gameHUDHealthBar);
+		Log.v(NovaCraft.TAG, "U HAS HUD: "+ gameHUDHealthBar);
+		if(gameHUDHealthBar != null) {
+			gameHUDHealthBar.setProgress( (int)(gameObject.getPlayerHealth()) );
+		}
 	}
 	
 	@Override

@@ -11,6 +11,11 @@ public class PlayerShip extends GameObject
 	public static int SHIP_SCOOT = 0;
 	public static int SHIP_WRATH = 1;
 	
+	public static int SHIP_FRAME_MOVE_LEFT = 0;
+	public static int SHIP_FRAME_NORMAL = 1;
+	public static int SHIP_FRAME_MOVE_RIGHT = 2;
+	
+	
 	ProjectileManager projManager;
 	
 	private float projectilesToFire;
@@ -19,11 +24,8 @@ public class PlayerShip extends GameObject
 	private float projectilePower = 1.0f;
 
 	private int alternate = 0;
-
-	NovaSprite spriteL;
-	NovaSprite spriteR;
-	NovaSprite currentSprite;
-	
+	private int currentFrame = SHIP_FRAME_NORMAL;
+		
 	float health;
 	
 	public PlayerShip(ProjectileManager _projManager)
@@ -52,23 +54,25 @@ public class PlayerShip extends GameObject
 			if(Input.xPos < positionX - 24 && positionX > 32.0f)
 			{
 				velocityX = -300.0f;
-				currentSprite = spriteL;
+				currentFrame = SHIP_FRAME_MOVE_LEFT;
 			}
 			else if(Input.xPos > positionX + 24 && positionX < 448.0f)
 			{
 				velocityX = 300.0f;
-				currentSprite = spriteR;
+				currentFrame = SHIP_FRAME_MOVE_RIGHT;
 			} else velocityX = 0.0f;
 			
-			if(Input.yPos < positionY - 32 && positionY > 32.0f)
+			if(Input.yPos < positionY - 32 && positionY > 32.0f) {
 				velocityY = -200.0f;
-			else if(Input.yPos > positionY + 32 && positionY < 300.0f)
+			} else if(Input.yPos > positionY + 32 && positionY < 300.0f) {
 				velocityY = 200.0f;
-			else velocityY = 0.0f;
+			} else {
+				velocityY = 0.0f;
+			}
 		}
 		else
 		{
-			currentSprite = sprite;
+			currentFrame = SHIP_FRAME_NORMAL;
 			velocityX = 0;
 			velocityY = 0;
 		}
@@ -121,7 +125,7 @@ public class PlayerShip extends GameObject
 	{
         //super.Render(elapsedTime);
 		
-		currentSprite.Render(positionX, positionY);
+		sprite.Render(positionX, positionY, currentFrame);
 	}
 	
 	public boolean Hurt(float damage)
@@ -139,25 +143,9 @@ public class PlayerShip extends GameObject
 	
 	public void SelectShip(int shipID) {
 		if(shipID == SHIP_SCOOT) {
-			sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_scoot_normal));
-
-			spriteL = new NovaSprite();
-			spriteL.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_scoot_left));
-
-			spriteR = new NovaSprite();
-			spriteR.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_scoot_right));
-
-			currentSprite = sprite;
+			sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_scoot, 64, 128));
 		} else if(shipID == SHIP_WRATH) {
-			sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_normal));
-
-			spriteL = new NovaSprite();
-			spriteL.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_left));
-
-			spriteR = new NovaSprite();
-			spriteR.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath_right));
-
-			currentSprite = sprite;
+			sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.player_ship_wrath, 64, 64));
 		}
 	}
 	
@@ -170,7 +158,7 @@ public class PlayerShip extends GameObject
 	@Override
 	public void Reset() {
 		health = 100.0f;
-		
+		currentFrame = SHIP_FRAME_NORMAL;
 		projectilesPerSecond = 3.0f;
 		
 		positionX = 240.0f;

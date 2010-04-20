@@ -21,14 +21,14 @@ public class Projectile extends GameObject
 
 		s = new NovaSprite[5];
 
-		s[0] = new NovaSprite();
-		s[0].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.plasma));
+		s[PLASMA] = new NovaSprite();
+		s[PLASMA].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.plasma));
 
-		s[1] = new NovaSprite();
-		s[1].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.overbaronspooge));
+		s[OVERBARON_SPOOGE] = new NovaSprite();
+		s[OVERBARON_SPOOGE].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.overbaronspooge));
 
-		s[2] = new NovaSprite();
-		s[2].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.mutaliskballs));
+		s[MUTALISK_BALLS] = new NovaSprite();
+		s[MUTALISK_BALLS].UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.mutaliskballs));
 		
 		sprite = s[0];
 	}

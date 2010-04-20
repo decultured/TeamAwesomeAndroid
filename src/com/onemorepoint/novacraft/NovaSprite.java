@@ -14,18 +14,18 @@ import android.graphics.Color;
 
 public class NovaSprite
 {
-	private static final float texCoordArray[] = {
-		      0.0f, 1.0f,  // 0, Top Left
-		      0.0f, 0.0f,  // 1, Bottom Left
-		      1.0f, 0.0f,  // 2, Bottom Right
-		      1.0f, 1.0f,  // 3, Top Right
-	};
+	// private static final float texCoordArray[] = {
+	// 	0.0f, 1.0f,  // 0, Top Left
+	// 		0.0f, 0.0f,  // 1, Bottom Left
+	// 		1.0f, 0.0f,  // 2, Bottom Right
+	// 		1.0f, 1.0f,  // 3, Top Right
+	// };
 	private static final short[] indices = { 0, 1, 2, 0, 2, 3 };
 		
 	private int resourceID;
 	private NovaImage img;
 	FloatBuffer vertBuffer;
-	FloatBuffer texCoordBuffer;
+	// FloatBuffer texCoordBuffer;
 	ShortBuffer indexBuffer;
 
 	public float width;
@@ -119,11 +119,11 @@ public class NovaSprite
 		_BuildVerts();
 		
 		// Setup tex coord buffer
-		ByteBuffer tbb = ByteBuffer.allocateDirect(texCoordArray.length * 4);
-		tbb.order(ByteOrder.nativeOrder());
-		texCoordBuffer = tbb.asFloatBuffer();
-		texCoordBuffer.put(texCoordArray);
-		texCoordBuffer.position(0);
+		// ByteBuffer tbb = ByteBuffer.allocateDirect(texCoordArray.length * 4);
+		// tbb.order(ByteOrder.nativeOrder());
+		// texCoordBuffer = tbb.asFloatBuffer();
+		// texCoordBuffer.put(texCoordArray);
+		// texCoordBuffer.position(0);
 		
 		// Setup index buffer
 		ByteBuffer ibb = ByteBuffer.allocateDirect(indices.length * 2);
@@ -135,7 +135,11 @@ public class NovaSprite
 		return true;
 	}
 	
-	public void Render(float _x, float _y)
+	public void Render(float _x, float _y) {
+		Render(_x, _y, 0);
+	}
+	
+	public void Render(float _x, float _y, int segment)
 	{
 		if(img.GetTextureID() == 0)
 			return;
@@ -144,11 +148,16 @@ public class NovaSprite
 		NovaRenderer.gl.glTranslatef(_x-(width*0.5f), _y-(height*0.5f), 0);
 		NovaRenderer.gl.glBindTexture(GL10.GL_TEXTURE_2D, img.GetTextureID());
 		NovaRenderer.gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
-		NovaRenderer.gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texCoordBuffer);
+		NovaRenderer.gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, img.getTexCoords(segment));
 		NovaRenderer.gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
 		NovaRenderer.gl.glPopMatrix();
 	}
-	public void RenderZ(float _x, float _y)
+	
+	public void RenderZ(float _x, float _y) {
+		RenderZ(_x, _y, 0);
+	}
+	
+	public void RenderZ(float _x, float _y, int segment)
 	{
 		if(img.GetTextureID() == 0)
 			return;
@@ -157,7 +166,7 @@ public class NovaSprite
 		NovaRenderer.gl.glTranslatef(_x, _y, 0);
 		NovaRenderer.gl.glBindTexture(GL10.GL_TEXTURE_2D, img.GetTextureID());
 		NovaRenderer.gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertBuffer);
-		NovaRenderer.gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texCoordBuffer);
+		NovaRenderer.gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, img.getTexCoords(segment));
 		NovaRenderer.gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
 		NovaRenderer.gl.glPopMatrix();
 	}

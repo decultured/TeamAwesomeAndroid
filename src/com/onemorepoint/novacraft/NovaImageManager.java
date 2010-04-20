@@ -34,6 +34,13 @@ public class NovaImageManager
 		//images.clear();
 	}
 	
+	public NovaImage LoadImage(int resourceId, int segmentWidth, int segmentHeight) {
+		NovaImage img = LoadImage(resourceId);
+		img.setSegmentSize(segmentWidth, segmentHeight);
+		
+		return img;
+	}
+	
 	public NovaImage LoadImage(int resourceId)
 	{
 		NovaImage img = null;
@@ -50,7 +57,7 @@ public class NovaImageManager
 		
 		if(img != null)
 		{
-			//Log.v(NovaCraft.TAG, "Reusing image resource " + resourceId);
+			Log.v(NovaCraft.TAG, "Reusing image resource " + resourceId);
 			return img;
 		}
 					

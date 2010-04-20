@@ -11,17 +11,32 @@ import java.nio.ShortBuffer;
 import java.nio.IntBuffer;
 import java.nio.ByteOrder;
 import android.graphics.Color;
+import com.onemorepoint.geom.Rectangle;
 
 public class NovaImage
 {
+	private static final float texCoordArray_Full[] = {
+		0.0f, 1.0f,  // 0, Top Left
+		0.0f, 0.0f,  // 1, Bottom Left
+		1.0f, 0.0f,  // 2, Bottom Right
+		1.0f, 1.0f,  // 3, Top Right
+	};
+	
 	private int resourceID;
 	private int texID;
 	int width;
 	int height;
 	
+	private FloatBuffer texCoordBuffer;
+	private FloatBuffer texCoordBuffers[];
+	
+	private int segmentWidth;
+	private int segmentHeight;
+	
 	public NovaImage()
 	{
 		width = height = 0;
+		segmentWidth = segmentHeight = 0;
 		texID = 0;
 		resourceID = 0;
 	}
@@ -74,8 +89,17 @@ public class NovaImage
 		width = partyOBits.getWidth();
 		height = partyOBits.getHeight();
 		
+		texCoordBuffers = null;
+		
+		ByteBuffer tbb = ByteBuffer.allocateDirect(texCoordArray_Full.length * 4);
+		tbb.order(ByteOrder.nativeOrder());
+		texCoordBuffer = tbb.asFloatBuffer();
+		texCoordBuffer.put(texCoordArray_Full);
+		texCoordBuffer.position(0);
+		
 		return true;
 	}
+
 	
 	public void FreeTexture()
 	{
@@ -101,11 +125,88 @@ public class NovaImage
 	
 	int GetWidth()
 	{
-		return width;
+		if(texCoordBuffers != null) {
+			return segmentWidth;
+		} else {
+			return width;
+		}
 	}
 	
 	int GetHeight()
 	{
-		return height;
+		if(texCoordBuffers != null) {
+			return segmentHeight;
+		} else {
+			return height;
+		}
+	}
+	
+	public void setSegmentSize(int _w, int _h) {
+		segmentWidth = _w;
+		segmentHeight = _h;
+		
+		Segment();
+	}
+	
+	private void Segment() {
+		if(texCoordBuffers != null || segmentWidth == 0 || segmentHeight == 0 || segmentWidth > width || segmentHeight > height) {
+			return;
+		}
+		
+		Log.v(NovaCraft.TAG, "NovaImage::Segment() started, sw="+ segmentWidth +", sh="+segmentHeight +", w="+ width +", h="+height);
+		
+		int segmentsX = (width / segmentWidth);
+		int segmentsY = (height / segmentHeight);
+		int numSegments = segmentsX * segmentsY;
+		float segNormWidth = (float)segmentWidth / (float)width;
+		float segNormHeight = (float)segmentHeight / (float)height;
+		Log.v(NovaCraft.TAG, "NovaImage::Segment() segments nw="+ segNormWidth +", nh="+segNormHeight);
+		
+		// segments = new Rectangle[numSegments];
+		texCoordBuffers = new FloatBuffer[numSegments];
+		
+		int index = 0;
+		for(int r = 0; r < segmentsY; r++) {
+			for(int c = 0; c < segmentsX; c++) {
+				// segments[index] = new Rectangle(c * segmentWidth, r * segmentHeight, segmentWidth, segmentHeight);
+				
+				// generate this segments texture coordinates
+				float offsetX = (float)c * segNormWidth;
+				float offsetY = (float)r * segNormHeight;
+				
+				Log.v(NovaCraft.TAG, "NovaImage::Segment() segments offsetX="+ offsetX +", offsetY="+offsetY);
+				
+				float texCoordArray[] = {
+					      offsetX, offsetY + segNormHeight,  // 0, Top Left
+					      offsetX, offsetY,  // 1, Bottom Left
+					      offsetX + segNormWidth, offsetY,  // 2, Bottom Right
+					      offsetX + segNormWidth, offsetY + segNormHeight,  // 3, Top Right
+				};
+				
+				ByteBuffer tbb = ByteBuffer.allocateDirect(texCoordArray.length * 4);
+				tbb.order(ByteOrder.nativeOrder());
+				FloatBuffer texCoordBuffer = tbb.asFloatBuffer();
+				texCoordBuffer.put(texCoordArray);
+				texCoordBuffer.position(0);
+				
+				texCoordBuffers[index] = texCoordBuffer;
+				
+				index += 1;
+			}
+		}
+		
+		Log.v(NovaCraft.TAG, "NovaImage::Segment() finished, len = "+ index);
+	}
+	
+	public FloatBuffer getTexCoords() {
+		return getTexCoords(0);
+	}
+	
+	public FloatBuffer getTexCoords(int segment) {
+		if(texCoordBuffers == null) {
+			return texCoordBuffer;
+		} else {
+			return texCoordBuffers[segment];
+		}
 	}
 }

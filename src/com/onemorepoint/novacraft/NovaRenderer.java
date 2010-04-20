@@ -4,6 +4,9 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLSurfaceView;
 import android.app.Activity;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
@@ -67,6 +70,7 @@ public class NovaRenderer implements GLSurfaceView.Renderer
     	
     	if(NovaImageManager.needsReload) {
     		NovaImageManager.GetInstance().ReloadTextures();
+			gameObject.ChangeGameState(NovaGame.STATE_RESUME);
 		}
     	
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -74,6 +78,8 @@ public class NovaRenderer implements GLSurfaceView.Renderer
         
 		gameObject.Update();
 		gameObject.Render();
+		
+		NovaCraft.hRefresh.sendEmptyMessage(NovaCraft.MSG_UPDATE_GUI);
     }
     
     public void onResume()

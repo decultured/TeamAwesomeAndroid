@@ -7,8 +7,9 @@ import java.lang.Math;
 
 public class EnemyScourb extends EnemyShip
 {	
-	NovaSprite spriteF1, spriteF2, spriteF3;
 	float lastFrame;
+	public int frame = 0;
+	public float frameLength = 0.25f;
 	
 	public EnemyScourb(PlayerShip p, ProjectileManager _projManager)
 	{
@@ -17,16 +18,7 @@ public class EnemyScourb extends EnemyShip
 		health = 50;
 		lastFrame = 0;
 
-		spriteF1 = new NovaSprite();
-		spriteF1.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.scorb_1));
-		
-		spriteF2 = new NovaSprite();
-		spriteF2.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.scorb_2));
-		
-		spriteF3 = new NovaSprite();
-		spriteF3.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.scorb_3));
-		
-		sprite = spriteF1;
+		sprite.UseImage(NovaImageManager.GetInstance().LoadImage(R.raw.scorb, 32, 32));
 		
 		positionY = 854 + sprite.GetHeight()/2;
 		positionX = (float)Math.random()*480.0f;
@@ -49,22 +41,21 @@ public class EnemyScourb extends EnemyShip
         else if(positionX > player.positionX + 64)
         	velocityX = (float)(Math.random()*-100 - 50);
         	
-        if(timeAlive - lastFrame > 0.25)
-        {
-        	lastFrame = timeAlive;
-        	if(sprite == spriteF1)
-        		sprite = spriteF2;
-        	else if(sprite == spriteF2)
-        		sprite = spriteF3;
-        	else if(sprite == spriteF3)
-        		sprite = spriteF1;
-        }
+        if(timeAlive - lastFrame > frameLength)
+		{
+			lastFrame = timeAlive;
+			frame++;
+		}
+		
+		if(frame > 3) {
+			frame = 0;
+		}
         
    	}
 	
     @Override
 	public void Render(float elapsedTime)
 	{
-        super.Render(elapsedTime);
+        super.Render(elapsedTime, frame);
 	}
 }

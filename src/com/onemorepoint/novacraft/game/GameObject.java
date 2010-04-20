@@ -103,6 +103,14 @@ public class GameObject
 		sprite.Render(positionX,positionY);	
 	}
 	
+	public void Render(float elapsedTime, int frame)
+	{
+		if(!visible)
+			return;
+		
+		sprite.Render(positionX,positionY, frame);
+	}
+	
 	public void Reset() {
 		
 	}

@@ -14,7 +14,24 @@ public class NovaGame extends Game
 {
 	public static NovaGame instance;
 	
-	private boolean gameComplete = false;
+	public static int STATE_RUNNING = 0;
+	public static int STATE_RESUME = 1;
+	public static int STATE_GAME_OVER = 10;
+	public static int STATE_PLAYER_LOST = 20;
+	public static int STATE_PLAYER_WON = 21;
+	
+	private int gameState = STATE_RUNNING;
+	private int lastGameState = -1;
+	private float levelTimeElapsed = 0.0f;
+	private float levelTimeTotal = 0.0f;
+	
+	private int levelCurrScourbs = 0;
+	private int levelCurrOverbarons = 0;
+	private int levelCurrMutalusks = 0;
+	private int levelMaxScourbs = 0;
+	private int levelMaxOverbarons = 0;
+	private int levelMaxMutalusks = 0;
+	
 	private int Score = 0;
 	private int Lives = 0;
 	private int Level = 0;
@@ -50,9 +67,9 @@ public class NovaGame extends Game
 		enemies = new LinkedList<EnemyShip>();
 		background = new NovaBackground();
 		laserSound = sound.LoadSound(R.raw.laser);
-        mutaDiesSound = sound.LoadSound(R.raw.mutalusk_dies);
-        scourbDiesSound = sound.LoadSound(R.raw.scourb_dies);
-        baronDiesSound = sound.LoadSound(R.raw.overbaron_dies);
+		mutaDiesSound = sound.LoadSound(R.raw.mutalusk_dies);
+		scourbDiesSound = sound.LoadSound(R.raw.scourb_dies);
+		baronDiesSound = sound.LoadSound(R.raw.overbaron_dies);
 
 		powerups = new Powerup[numPowerups];
 		
@@ -61,25 +78,15 @@ public class NovaGame extends Game
 			powerups[i] = new Powerup();
 		}
 		
-		Reset();
+		ResetGame();
 	}
 	
+	public int getState() { return gameState; }
 	public int getScore() { return Score; }
 	public int getLives() { return Lives; }
 	public int getLevel() { return Level; }
 	
 	public float getPlayerHealth() { return player.health; }
-	
-	public void processGameState() {
-		// if(NovaCraft.isGameOver) {
-		// 	Reset();
-		// } else {
-		// 	Score = NovaCraft.gameScore;
-		// 	Lives = NovaCraft.gameLives;
-		// 	
-		// 	ChangeLevel();
-		// }
-	}
 	
 	private void SpawnPowerup(float _chance, float _x, float _y)
 	{
@@ -95,55 +102,52 @@ public class NovaGame extends Game
 		}
 	}
 
-    @Override
+	@Override
 	public void Update()
 	{
-        super.Update();
+		super.Update();
+		
+		if(gameState != STATE_RUNNING) {
+			// state is not "normal" skip this update.
+			return;
+		}
+		
 		projManager.Update(elapsedTime);
 		splosionManager.Update(elapsedTime);
 		player.Update(elapsedTime);
 		
-		if(gameComplete == true) {
-			gameComplete = false;
+		if(totalTime - lastSpawn > 1)
+		{
+			//sound.pool.play(laserSound, 1, 1, 1, 0, 1);
 			
-			if(Lives <= 0) {
-				Reset();
-			} else {
-				ChangeLevel();
+			if(scourbsOut < 5 && levelCurrScourbs < levelMaxScourbs)
+			{
+				// Spawn enemies
+				EnemyScourb scourb = new EnemyScourb(player, projManager);
+				enemies.addLast(scourb);
+				scourbsOut++;
+				levelCurrScourbs++;
 			}
 			
-			return;
+			if(overbaronsOut < 1 && levelCurrOverbarons < levelMaxOverbarons)
+			{
+				EnemyOverbaron baron = new EnemyOverbaron(player, projManager);
+				enemies.addLast(baron);
+				overbaronsOut++;
+				levelCurrOverbarons++;
+			}
+			
+			if(mutalusksOut < 3 && levelCurrMutalusks < levelMaxMutalusks)
+			{
+				EnemyMutalusk muta = new EnemyMutalusk(player, projManager);
+				enemies.addLast(muta);
+				mutalusksOut++;
+				levelCurrMutalusks++;
+			}
+			
+			lastSpawn = totalTime;
 		}
 		
-		if(totalTime - lastSpawn > 1)
-     	{
-     		//sound.pool.play(laserSound, 1, 1, 1, 0, 1);
-     		
-     		if(scourbsOut < 5)
-     		{
-	     		// Spawn enemies
-	     		EnemyScourb scourb = new EnemyScourb(player, projManager);
-	     		enemies.addLast(scourb);
-	     		scourbsOut++;
-	     	}
-     		
-     		if(overbaronsOut < 1)
-     		{
-     			EnemyOverbaron baron = new EnemyOverbaron(player, projManager);
-	     		enemies.addLast(baron);
-	     		overbaronsOut++;
-	     	}
-	     	
-	     	if(mutalusksOut < 3)
-	     	{
-	     		EnemyMutalusk muta = new EnemyMutalusk(player, projManager);
-	     		enemies.addLast(muta);
-	     		mutalusksOut++;
-	     	}
-     		
-     		lastSpawn = totalTime;
-     	}
-     	
 		for (int i = 0; i < numPowerups; i++) {
 			if (powerups[i].active)
 				powerups[i].Update(elapsedTime);
@@ -157,18 +161,18 @@ public class NovaGame extends Game
 			}			
 		}
 
-     	if (projManager.CollidesWith(player, true, true))
-     	{
-     		if(player.Hurt(20.0f))
-     		{
-     			Log.v(NovaCraft.TAG, "YOU BE DED!");
-     		}
-
+		if (projManager.CollidesWith(player, true, true))
+		{
+			if(player.Hurt(20.0f))
+			{
+				Log.v(NovaCraft.TAG, "YOU BE DED!");
+			}
+			
 			player.Powerup(false);
-     	}
-     	
-     	Iterator enemyIter = enemies.iterator();
-     	while(enemyIter.hasNext())
+		}
+		
+		Iterator enemyIter = enemies.iterator();
+		while(enemyIter.hasNext())
 		{	
 			EnemyShip enemy = (EnemyShip)enemyIter.next();
 			if (projManager.CollidesWith(enemy, true, false))
@@ -211,24 +215,35 @@ public class NovaGame extends Game
 			else enemy.Update(elapsedTime);
 		}
 		
-		// added GUI update
-		if(NovaCraft.instance != null) {
-			if(!player.isAlive()) {
-				Lives--;
-				GameOver();
+		levelTimeElapsed += elapsedTime;
+		if(levelTimeElapsed > 2.0f) {
+			if(levelTimeElapsed >= levelTimeTotal || (enemies.size() == 0 && scourbsOut == 0 && mutalusksOut == 0 && overbaronsOut == 0)) {
+				Log.v(NovaCraft.TAG, "Level done! "+ levelTimeElapsed +", "+ levelTimeTotal +", "+ elapsedTime);
+				ChangeGameState(STATE_PLAYER_WON);
+			} else if(levelTimeElapsed >= levelTimeTotal) {
+				ChangeGameState(STATE_PLAYER_LOST);
+			} else if(NovaCraft.instance != null) {
+				if(!player.isAlive()) {
+					ChangeGameState(STATE_PLAYER_LOST);
+				}
 			}
 		}
 	}
 	
-    @Override
+	@Override
 	public void Render()
 	{
-        super.Render();
+		super.Render();
+		
+		// if(gameState != STATE_RUNNING) {
+		// 	// state is not "normal" skip this update.
+		// 	return;
+		// }
 		
 		// DO ME FIRST, PLAYER GETS SLOPPY SECONDS!
 		background.Render();
-     	background.AddOffset(elapsedTime * 180.0f);
-     	
+		background.AddOffset(elapsedTime * 180.0f);
+		
 		splosionManager.Render(elapsedTime);
 		projManager.Render(elapsedTime);
 
@@ -237,8 +252,8 @@ public class NovaGame extends Game
 				powerups[i].Render(elapsedTime);
 		}
 
-     	Iterator enemyIter = enemies.iterator();
-     	while(enemyIter.hasNext())
+		Iterator enemyIter = enemies.iterator();
+		while(enemyIter.hasNext())
 		{	
 			EnemyShip enemy = (EnemyShip)enemyIter.next();
 			enemy.Render(elapsedTime);
@@ -247,34 +262,62 @@ public class NovaGame extends Game
 		player.Render(elapsedTime);
 	}
 	
-	public void GameOver() {
-		gameComplete = true;
+	@Override
+	public void ChangeGameState(int _state) {
+		lastGameState = gameState;
+		gameState = _state;
 		
-		View v = NovaCraft.instance.findViewById(R.id.gameMain);
+		if(gameState == STATE_RESUME) {
+			// Game has been resumed, where were we?
+			if(lastGameState == STATE_PLAYER_WON) {
+				ChangeLevel();
+			} else if(lastGameState == STATE_PLAYER_LOST) {
+				ResetLevel();
+			} else if(lastGameState == STATE_GAME_OVER) {
+				ResetGame();
+			}
+			
+			ChangeGameState(STATE_RUNNING);
+		} else {
+			// These states are GAME CHANGE states.
+			View v = NovaCraft.instance.findViewById(R.id.gameMain);
+			Intent intent = null;
 		
-		Intent intent = new Intent(v.getContext(), NovaGameOverScreen.class);
-		intent.putExtra("com.onemorepoint.novacraft.GameOver", Score);
-		intent.putExtra("com.onemorepoint.novacraft.GameScore", Score);
-		intent.putExtra("com.onemorepoint.novacraft.GameLives", Lives);
+			if(gameState == STATE_PLAYER_LOST) {
+				Lives--;
+			
+				if(Lives == 0) {
+					ChangeGameState(STATE_GAME_OVER);
+					return;
+				} else {
+					intent = new Intent(v.getContext(), NovaGameScoreScreen.class);
+				}
+			} else if(gameState == STATE_PLAYER_WON) {
+				Score += 500;
+				Lives += (Level % 2 == 0 ? 1 : 0);
+			
+				intent = new Intent(v.getContext(), NovaGameScoreScreen.class);
+			} else if(gameState == STATE_GAME_OVER) {
+				ResetGame();
+			
+				intent = new Intent(v.getContext(), NovaGameOverScreen.class);
+			}
 		
-		v.getContext().startActivity(intent);
+			if(v != null && intent != null) {
+				intent.putExtra("com.onemorepoint.novacraft.GameState", gameState);
+				intent.putExtra("com.onemorepoint.novacraft.GameScore", Score);
+				intent.putExtra("com.onemorepoint.novacraft.GameLives", Lives);
+			
+				v.getContext().startActivity(intent);
+			}
+		}
 	}
 	
 	@Override
 	public void ChangeLevel() {
-		enemies.clear();
-		projManager.Reset();
-		splosionManager.Reset();
-		
-		player.Reset();
-		
-		scourbsOut = 0;
-		overbaronsOut = 0;
-		mutalusksOut = 0;
-		
-		lastSpawn = 0;
-		
 		Level++;
+		
+		ResetLevel();
 		
 		if(Level % 2 == 0) {
 			background.Load(1);
@@ -288,7 +331,32 @@ public class NovaGame extends Game
 	}
 	
 	@Override
-	public void Reset() {
+	public void ResetLevel() {
+		enemies.clear();
+		projManager.Reset();
+		splosionManager.Reset();
+		
+		player.Reset();
+		
+		levelTimeElapsed = 0.0f;
+		levelTimeTotal = 60.0f + ((Level-1) * 5.0f);
+		
+		levelCurrScourbs = 0;
+		levelCurrOverbarons = 0;
+		levelCurrMutalusks = 0;
+		levelMaxScourbs = 6 + (int)(Level * 0.75f);
+		levelMaxMutalusks = 3 + (int)(Level * 0.5f);
+		levelMaxOverbarons = (Level > 3 ? 1 + (int)(Level * 0.34f) : 0);
+		
+		scourbsOut = 0;
+		overbaronsOut = 0;
+		mutalusksOut = 0;
+		
+		lastSpawn = 0;
+	}
+	
+	@Override
+	public void ResetGame() {
 		Log.v(NovaCraft.TAG, "Game reset started");
 		Score = 0;
 		Lives = 5;

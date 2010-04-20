@@ -17,9 +17,8 @@ import android.view.WindowManager;
 
 import com.onemorepoint.novacraft.novagame.NovaGame;
 
-public class NovaGameOverScreen extends Activity
+public class NovaGameScoreScreen extends Activity
 {
-	/** Called when the activity is first created. */
 	private int gameScore = 0;
 	private int gameLives = 0;
 	private int gameState = -1;
@@ -30,15 +29,27 @@ public class NovaGameOverScreen extends Activity
 		super.onCreate(savedInstanceState);
 		//		   this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.game_over);
+		setContentView(R.layout.score_screen);
 		
-		Intent intent = getIntent();
-		Log.v(NovaCraft.TAG, "INTENTS = "+ intent);
-		if(intent != null) {
-			gameState = intent.getIntExtra("com.onemorepoint.novacraft.GameState", -1);
-			gameScore = intent.getIntExtra("com.onemorepoint.novacraft.GameScore", -1);
-			gameLives = intent.getIntExtra("com.onemorepoint.novacraft.GameLives", -1);
-		}
+		ImageView btnContinue = (ImageView)findViewById(R.id.btnContinue);
+		btnContinue.setOnClickListener(btnContinueListener);
+		
+		UpdateUI();
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		UpdateUI();
+	}
+	
+	public void UpdateUI() {
+		gameState = NovaGame.instance.getState();
+		gameScore = NovaGame.instance.getScore();
+		gameLives = NovaGame.instance.getLives();
+		
+		Log.v(NovaCraft.TAG, "NovaGameScoreScreen got gameState = "+ gameState);
 		
 		TextView playerLives = (TextView)findViewById(R.id.playerLives);
 		playerLives.setText( ""+ gameLives );
@@ -46,11 +57,17 @@ public class NovaGameOverScreen extends Activity
 		TextView playerScore = (TextView)findViewById(R.id.playerScore);
 		playerScore.setText( ""+ gameScore );
 		
-		ImageView btnNewGame = (ImageView)findViewById(R.id.btnNewGame);
-		btnNewGame.setOnClickListener(btnNewGameListener);
+		TextView gameMessage = (TextView)findViewById(R.id.gameMessage);
+		if(gameState == NovaGame.STATE_PLAYER_WON) {
+			gameMessage.setTextColor(0xFF00FF00);
+			gameMessage.setText(R.string.game_state_player_won);
+		} else {
+			gameMessage.setTextColor(0xFFFF0000);
+			gameMessage.setText(R.string.game_state_player_lost);
+		}
 	}
 	
-	View.OnClickListener btnNewGameListener = new View.OnClickListener() {
+	View.OnClickListener btnContinueListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			Intent myIntent = new Intent(v.getContext(), NovaCraft.class);
 			startActivity(myIntent);

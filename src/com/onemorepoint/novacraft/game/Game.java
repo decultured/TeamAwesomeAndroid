@@ -49,11 +49,19 @@ public class Game
 		
 	}
 	
+	public void ChangeGameState(int _state) {
+		
+	}
+	
 	public void ChangeLevel() {
 		
 	}
 	
-	public void Reset() {
+	public void ResetLevel() {
+		
+	}
+	
+	public void ResetGame() {
 		
 	}
 }
