@@ -64,24 +64,13 @@ public class NovaCraft extends Activity
 		NovaGame gameObject = NovaGame.instance;
 		
 		TextView gameHUDScore = (TextView)NovaCraft.instance.findViewById(R.id.gameHUDScore);
-		if(gameHUDScore != null) {
-			try {
-				gameHUDScore.setText("" + gameObject.getScore());
-			} catch(Exception e) {
-				Log.v(NovaCraft.TAG, ""+ e);
-			}
-		}
+		gameHUDScore.setText("" + gameObject.getScore());
 		
 		TextView gameHUDLives = (TextView)NovaCraft.instance.findViewById(R.id.gameHUDLives);
-		if(gameHUDLives != null) {
-			gameHUDLives.setText("" + gameObject.getLives());
-		}
-					
+		gameHUDLives.setText("" + gameObject.getLives());
+		
 		ProgressBar gameHUDHealthBar = (ProgressBar)NovaCraft.instance.findViewById(R.id.gameHUDHealthBar);
-		Log.v(NovaCraft.TAG, "U HAS HUD: "+ gameHUDHealthBar);
-		if(gameHUDHealthBar != null) {
-			gameHUDHealthBar.setProgress( (int)(gameObject.getPlayerHealth()) );
-		}
+		gameHUDHealthBar.setProgress( (int)(gameObject.getPlayerHealth()) );
 	}
 	
 	@Override

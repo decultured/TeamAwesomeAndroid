@@ -24,6 +24,7 @@ public class NovaGame extends Game
 	private int lastGameState = -1;
 	private float levelTimeElapsed = 0.0f;
 	private float levelTimeTotal = 0.0f;
+	private int levelScore = 0;
 	
 	private int levelCurrScourbs = 0;
 	private int levelCurrOverbarons = 0;
@@ -178,7 +179,7 @@ public class NovaGame extends Game
 			if (projManager.CollidesWith(enemy, true, false))
 			{
 				enemy.Hurt(51);
-				Score += 27;
+				levelScore += 27;
 			}
 			else if(enemy instanceof EnemyScourb)
 			{
@@ -191,19 +192,19 @@ public class NovaGame extends Game
 			if(enemy.health <= 0)
 			{
 				if(enemy instanceof EnemyOverbaron) {
-					Score += 243;
+					levelScore += 243;
 					overbaronsOut--;
 					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 3);
 					SpawnPowerup(0.40f, enemy.positionX, enemy.positionY);
 					sound.pool.play(baronDiesSound, 1, 1, 1, 0, 1);
 				} else if(enemy instanceof EnemyScourb) {
-					Score += 81;
+					levelScore += 81;
 					scourbsOut--;
 					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 1);
 					SpawnPowerup(0.10f, enemy.positionX, enemy.positionY);
 					sound.pool.play(scourbDiesSound, 1, 1, 1, 0, 1);
 				} else if(enemy instanceof EnemyMutalusk) {
-					Score += 152;
+					levelScore += 152;
 					splosionManager.AddSplosion(enemy.positionX, enemy.positionY, enemy.sprite.width, enemy.sprite.height, 2);
 					SpawnPowerup(0.20f, enemy.positionX, enemy.positionY);
 					mutalusksOut--;
@@ -293,7 +294,7 @@ public class NovaGame extends Game
 					intent = new Intent(v.getContext(), NovaGameScoreScreen.class);
 				}
 			} else if(gameState == STATE_PLAYER_WON) {
-				Score += 500;
+				Score += levelScore + 500;
 				Lives += (Level % 2 == 0 ? 1 : 0);
 			
 				intent = new Intent(v.getContext(), NovaGameScoreScreen.class);
@@ -340,6 +341,7 @@ public class NovaGame extends Game
 		
 		levelTimeElapsed = 0.0f;
 		levelTimeTotal = 60.0f + ((Level-1) * 5.0f);
+		levelScore = 0;
 		
 		levelCurrScourbs = 0;
 		levelCurrOverbarons = 0;

@@ -1,55 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:a="http://schemas.android.com/apk/res/android"
-    a:orientation="vertical"
-    a:layout_width="fill_parent"
-    a:layout_height="fill_parent"
-    a:fadingEdgeLength="0sp"
-    >
-	<ImageView
-	a:id="@+id/background"
-	a:layout_width="wrap_content"
-	a:layout_height="wrap_content"
-	a:src="@drawable/novacraft_menu_bg"
-	a:layout_x="0dp"
-	a:layout_y="0dp"
-	>
+<AbsoluteLayout xmlns:a="http://schemas.android.com/apk/res/android" a:orientation="vertical" a:layout_width="fill_parent" a:layout_height="fill_parent" a:fadingEdgeLength="0sp">
+	<ImageView a:id="@+id/background" a:layout_width="wrap_content" a:layout_height="wrap_content" a:src="@drawable/novacraft_menu_bg" a:layout_x="0dp" a:layout_y="0dp">
 	</ImageView>
-	
-	<ImageView
-		a:id="@+id/logo"
-		a:layout_width="fill_parent"
-		a:layout_height="43sp"
-		a:src="@drawable/novacraft_start_logo"
-		a:layout_x="2sp"
-		a:layout_y="226sp"
-	/>
-	
-	<ImageView
-		a:id="@+id/single_player_start"
-		a:layout_width="200sp"
-		a:layout_height="20sp"
-		a:src="@drawable/single_player_start"
-		a:layout_x="100sp"
-		a:layout_y="286sp"
-	/>
-	
-    <!-- <ImageView
-        a:id="@+id/show_credits"
-        a:layout_width="150sp"
-        a:layout_height="15sp"
-        a:src="@drawable/show_credits"
-        a:layout_x="150sp"
-        a:layout_y="400sp"
-    /> -->
-	
-    <TextView
-        a:layout_width="wrap_content"
-        a:layout_height="wrap_content"
-        a:layout_x="186sp"
-        a:layout_y="483sp"
-        a:textSize="8sp"
-        a:textColor="#ffa4b4f8"
-        a:text="Version 3.3.1"
-    />
+	<ImageView a:id="@+id/logo" a:layout_width="fill_parent" a:layout_height="43sp" a:src="@drawable/novacraft_start_logo" a:layout_x="2sp" a:layout_y="226sp"/>
+	<ImageView a:id="@+id/single_player_start" a:layout_width="200sp" a:layout_height="20sp" a:src="@drawable/single_player_start" a:layout_x="100sp" a:layout_y="286sp"/>
+	<ImageView a:id="@+id/show_credits" a:layout_width="150sp" a:layout_height="15sp" a:src="@drawable/show_credits" a:layout_x="150sp" a:layout_y="400sp"/>
+	<TextView a:layout_width="wrap_content" a:layout_height="wrap_content" a:layout_x="186sp" a:layout_y="483sp" a:textSize="8sp" a:textColor="#ffa4b4f8" a:text="Version 3.3.1"/>
 </AbsoluteLayout>
-
