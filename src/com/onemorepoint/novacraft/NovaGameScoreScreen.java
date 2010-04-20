@@ -33,8 +33,6 @@ public class NovaGameScoreScreen extends Activity
 		
 		ImageView btnContinue = (ImageView)findViewById(R.id.btnContinue);
 		btnContinue.setOnClickListener(btnContinueListener);
-		
-		UpdateUI();
 	}
 	
 	@Override

@@ -81,7 +81,7 @@ public class NovaImage
 			Log.e(NovaCraft.TAG, "Failed to load texture:" + resourceId);
 			return false;
 		}
-		else Log.v(NovaCraft.TAG, "Texture loaded:" + resourceId + " with GL ID:" + texID);
+		else Log.v(NovaCraft.TAG, "Texture loaded:" + resourceId + " with GL ID:" + texID + " width: "+ partyOBits.getWidth() +" height: "+ partyOBits.getHeight());
 		
 		NovaRenderer.gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
 		NovaRenderer.gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
